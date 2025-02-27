@@ -29,8 +29,8 @@ A collection of scripts that I use as part of my role as a Technical Specialist.
 | Script Name | Description |
 |--------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | [Inventory-SPFarm.ps1](SharePoint/Inventory-SPFarm.ps1) | Inventories various components of a SharePoint farm and outputs the results to CSV files. |
-| [Add-SharePointAgentDisclaimer.ps1](SharePoint/Add-SharePointAgentDisclaimer.ps1) | Adds a disclaimer to the welcome message of a SharePoint agent. |
-| [Create-OneDriveSites.ps1](SharePoint/Create-OneDriveSites.ps1) | Creates OneDrive sites for a list of users in batches. |
+| [Add-SharePointAgentDisclaimer.ps1](SharePoint-Online/Add-SharePointAgentDisclaimer.ps1) | Adds a disclaimer to the welcome message of a SharePoint agent. |
+| [Create-OneDriveSites.ps1](SharePoint-Online/Create-OneDriveSites.ps1) | Creates OneDrive sites for a list of users in batches. |
 
 ### Power-Platform
 
