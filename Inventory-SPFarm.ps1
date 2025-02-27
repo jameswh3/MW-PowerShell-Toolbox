@@ -553,7 +553,7 @@ function Inventory-SPWebs {
 				} #if InventoryWebParts
 				if ($InventoryWebPermissions) {
 					Inventory-SPWebUniquePermissions -web $web -LogFilePrefix $LogFilePrefix -DestinationFolder $DestinationFolder
-				} #if InventoryWebParts
+				} #if Inventory Web Permissions
 			} #try
 			catch {
 				Record-Error $Location $Area $error[0] $LogFilePrefix $DestinationFolder
