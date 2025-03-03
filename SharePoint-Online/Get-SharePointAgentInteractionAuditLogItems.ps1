@@ -26,5 +26,3 @@ write-host "All items count: $($allResults.Count)"
 $copilotAgentInteractionAuditLogItems = $allResults | Where-Object {$_.AuditData -like "*.agent*"}
 
 write-host "SharePoint Agent items count: $($copilotAgentInteractionAuditLogItems.Count)"
-
-$copilotAgentInteractionAuditLogItems | Export-CSV -path "c:\temp\copilotAgentCreation.csv" -NoTypeInformation
