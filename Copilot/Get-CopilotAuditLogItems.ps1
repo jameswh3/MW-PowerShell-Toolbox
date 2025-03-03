@@ -1,6 +1,6 @@
 #Requires -Modules ExchangeOnlineManagement
 
-$startDate = "2025-02-25"
+$startDate = "2025-02-21"
 $endDate = "2025-02-28"
 $upn = "<your upn>"
 
@@ -17,9 +17,9 @@ do {
       $currentResult=Search-UnifiedAuditLog `
             -StartDate $startDate `
             -EndDate $endDate `
-            -RecordType $recordType `
             -SessionCommand ReturnLargeSet `
-            -SessionId $sessionId
+            -SessionId $sessionId `
+            -RecordType "$recordType"
       $allResults += $currentResult
       write-host "Current Result Count: $($currentResult.Count)"
       write-host "All Result Count: $($allResults.Count)"
