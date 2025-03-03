@@ -1,6 +1,6 @@
 #Requires -Modules ExchangeOnlineManagement
 
-$startDate = "2025-01-01"
+$startDate = "2025-02-25"
 $endDate = "2025-02-28"
 $upn = "<your upn>"
 

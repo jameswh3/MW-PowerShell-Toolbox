@@ -1,4 +1,4 @@
-$startDate = "2025-01-25"
+$startDate = "2025-02-25"
 $endDate = "2025-02-28"
 $upn = read-host "Enter your UPN"
 
@@ -6,7 +6,7 @@ $upn = read-host "Enter your UPN"
 Connect-ExchangeOnline -UserPrincipalName $upn
 
 #region - Get All Record Types for the Date Range
-$sessionId = "FileUpload Operation SharePoint RecordTypes from $startDate to $endDate 4"
+$sessionId = "FileUpload Operation SharePoint RecordTypes from $startDate to $endDate"
 $allResults=@()
 do {
       $currentResult=Search-UnifiedAuditLog `
@@ -23,6 +23,8 @@ do {
 
 write-host "All items count: $($allResults.Count)"
 
-$copilotAgentCreationAuditLogItems = $allResults | Where-Object {$_.AuditData -like "*.agent*"}
+$copilotAgentInteractionAuditLogItems = $allResults | Where-Object {$_.AuditData -like "*.agent*"}
 
-write-host "SharePoint Agent items count: $($copilotAgentCreationAuditLogItems.Count)"
+write-host "SharePoint Agent items count: $($copilotAgentInteractionAuditLogItems.Count)"
+
+$copilotAgentInteractionAuditLogItems | Export-CSV -path "c:\temp\copilotAgentCreation.csv" -NoTypeInformation
