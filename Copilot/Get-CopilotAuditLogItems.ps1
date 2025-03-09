@@ -1,8 +1,8 @@
 #Requires -Modules ExchangeOnlineManagement
 
-$startDate = "2025-02-21"
-$endDate = "2025-02-28"
-$upn = "<your upn>"
+$startDate = "2025-03-01"
+$endDate = "2025-03-05"
+$upn = Read-Host "Enter your UPN"
 
 #Exchange Online Management Session; $set upn variable prior to running
 Connect-ExchangeOnline -UserPrincipalName $upn
@@ -49,6 +49,11 @@ foreach ($copilotResult in $allResults) {
             $aiSysPlugins+=$aisysplugin.Id
       }
       $copilotDatum | Add-Member NoteProperty AIPlugins($aiSysPlugins -join ",")
+      $messageCount=0
+      foreach ($message in $auditData.CopilotEventData.Messages) {
+            $messageCount++
+      }
+      $copilotDatum | Add-Member NoteProperty MessageCount ($messageCount)
       $copilotData+=$copilotDatum
 }
 
