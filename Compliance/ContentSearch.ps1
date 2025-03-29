@@ -1,7 +1,7 @@
 #Requires -Modules ExchangeOnlineManagement
 
 # Function to check the status of the compliance search
-function Check-ComplianceSearchStatus {
+function Get-ComplianceSearchStatus {
     param (
         [string]$searchName
     )
@@ -12,7 +12,7 @@ function Check-ComplianceSearchStatus {
 }
 
 # Function to check the status of the compliance search action
-function Check-ComplianceSearchActionStatus {
+function Get-ComplianceSearchActionStatus {
     param (
         [string]$searchActionName
     )
@@ -41,7 +41,7 @@ Start-ComplianceSearch -Identity $complianceSearchName
 
 # Loop to check the status until the search is completed
 do {
-    $status = Check-ComplianceSearchStatus -searchName $complianceSearchName
+    $status = Get-ComplianceSearchStatus -searchName $complianceSearchName
     Write-Host "Current status of the compliance search '$complianceSearchName': $status"
     Start-Sleep -Seconds 10
 } while ($status -ne "Completed")
@@ -57,7 +57,7 @@ New-ComplianceSearchAction -SearchName $complianceSearchName `
 
 # Loop to check the status until the search action is completed
 do {
-    $status = Check-ComplianceSearchActionStatus -searchActionName $complianceSearchActionName
+    $status = Get-ComplianceSearchActionStatus -searchActionName $complianceSearchActionName
     Write-Host "Current status of the compliance search action '$complianceSearchActionName': $status"
     Start-Sleep -Seconds 10
 } while ($status -ne "Completed")
