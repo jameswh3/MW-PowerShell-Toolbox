@@ -1,6 +1,6 @@
 # MW-PowerShell-Toolbox
 
-A collection of scripts that I use as part of my role as a Technical Specialist. This repository contains various PowerShell scripts for managing and automating tasks.
+A collection of scripts that I use as part of my role as a Microsoft Modern Work Technical Specialist.
 
 ## Scripts Overview
 
@@ -15,7 +15,7 @@ A collection of scripts that I use as part of my role as a Technical Specialist.
 
 | Script Name | Description |
 |--------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| [Get-CopilotAuditLogItems.ps1](Copilot/Get-CopilotAuditLogItems.ps1) | Retrieves and processes Copilot interaction events from the unified audit log. |
+| [Get-CopilotInteractionAuditLogItems.ps1](Copilot/Get-CopilotInteractionAuditLogItems.ps1) | Retrieves and processes Copilot interaction events from the unified audit log. |
 
 ### Entra
 
@@ -24,10 +24,18 @@ A collection of scripts that I use as part of my role as a Technical Specialist.
 | [EntraUserInfo.ps1](Entra/EntraUserInfo.ps1) | Connects to Entra and retrieves user information based on UPN. |
 | [Update-AzureADUserUPN.ps1](Entra/Update-AzureADUserUPN.ps1) | Updates the User Principal Name (UPN) for Azure AD users. |
 
+### MsGraph
+
+| Script Name | Description |
+|--------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| [Get-MsGraphUserDetails.ps1](MsGraph/Get-MsGraphUserDetails.ps1) | Retrieves user details from Microsoft Graph. |
+
 ### Power-Platform
 
 | Script Name | Description |
 |--------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| [Get-AllDataPolicyConnectortInfo.ps1](Power-Platform/Get-AllDataPolicyConnectortInfo.ps1) | Retrieves all Data Loss Prevention (DLP) policy connector information from the Power Platform admin center. |
+| [Get-EnvironmentInfo.ps1](Power-Platform/Get-EnvironmentInfo.ps1) | Retrieves information about Power Platform environments in your tenant. |
 | [InventoryAppsAndConnections.ps1](Power-Platform/InventoryAppsAndConnections.ps1) | Gets details for Power Apps and their Connections |
 
 ### SharePoint
@@ -35,3 +43,10 @@ A collection of scripts that I use as part of my role as a Technical Specialist.
 | Script Name | Description |
 |--------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | [Inventory-SPFarm.ps1](SharePoint/Inventory-SPFarm.ps1) | Inventories various components of a SharePoint farm and outputs the results to CSV files. |
+
+### SharePoint-Online
+
+| Script Name | Description |
+|--------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| [Add-SharePointAgentDisclaimer.ps1](SharePoint-Online/Add-SharePointAgentDisclaimer.ps1) | Adds a disclaimer to the welcome message of a SharePoint agent. |
+| [Create-OneDriveSites.ps1](SharePoint-Online/Create-OneDriveSites.ps1) | Creates OneDrive sites for a list of users in batches. |

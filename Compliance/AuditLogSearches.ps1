@@ -1,8 +1,8 @@
 #Requires -Modules ExchangeOnlineManagement
 
 
-$startDate = "2025-01-18"
-$endDate = "2025-02-19"
+$startDate = (get-date).AddDays(-7).tostring("yyyy-MM-dd")
+$endDate = (get-date).tostring("yyyy-MM-dd")
 $upn = read-host "Enter your UPN"
 
 #Exchange Online Management Session; $set upn variable prior to running

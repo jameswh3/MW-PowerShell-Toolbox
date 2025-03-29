@@ -1,4 +1,4 @@
-#Requires -Modules Microsoft.PowerApps.Administration.PowerShell, Microsoft.PowerApps.Checker.PowerShell, Microsoft.PowerApps.PowerShell
+#Requires -Modules Microsoft.PowerApps.Administration.PowerShell
 
 function Get-PowerPlatformAppsAndConnections {
     BEGIN {
@@ -39,78 +39,3 @@ function Get-PowerPlatformAppsAndConnections {
         return $powerAppsData
     }
 }
-
-<#
-
-$outputFilelocation="C:\temp"
- 
-$environments = Get-AdminPowerAppEnvironment
-$powerAppConnectionReferences=@()
-$powerAppObjects=@()
-$powerAppRoles=@()
- 
-foreach ($e in $environments) {
-    write-host "Environment: " $e.displayname
-    $powerapps = Get-AdminPowerApp -EnvironmentName $e.EnvironmentName
-    foreach ($pa in $powerapps) {
-        write-host "  App Name: " $pa.DisplayName " - " $pa.AppName
-        $paObj=@{
-            type="Power App"
-            CanConsumeAppPasses=$app.Internal.properties.canConsumeAppPass
-            UsesOnlyGrandfatheredPremiumAPIs=$app.Internal.properties.usesOnlyGrandfatheredPremiumApis
-            UsesOnPremisesGateway=$app.Internal.properties.usesOnPremiseGateway
-            UsesCustomAPI=$app.Internal.properties.usesCustomApi
-            Environment=$e.displayname
-            AppFlowName=$pa.AppName
-            AppDisplayName=$pa.DisplayName
-            createdDate=$pa.CreatedTime
-            createdBy=$pa.Owner
-            AppPlanClassification=$pa.Internal.properties.appPlanClassification
-        }
-        $powerAppObjects+=$(new-object psobject -Property $paObj)
-        foreach ($role in (Get-AdminPowerAppRoleAssignment -AppName $pa.AppName -EnvironmentName $e.EnvironmentName)) {
-            $paRoleObj=@{
-                AppFlowName=$role.AppName
-                RoleType=$role.RoleType
-                PrincipalType=$role.PrincipalType
-                PrincipalObjectId=$role.PrincipalObjectId
-                PrincipalDisplayName=$role.PrincipalDisplayName
-                PrincipalEmail=$role.PrincipalEmail
-            }
-            $powerAppRoles+=$(new-object psobject -Property $paRoleObj)
- 
-        } #foreach role
-        foreach ($conRef in $pa.Internal.properties.connectionReferences) {
-            foreach ($con in $conRef) {
-                foreach ($conId in ($con | Get-Member -MemberType NoteProperty).Name) {
-                    $conDetails = $($con.$conId)
-                    $apiTier = $conDetails.apiTier
-                    if ($conDetails.isCustomApiConnection) {$apiTier = "Premium (CustomAPI)"}
-                    if ($conDetails.isOnPremiseConnection ) {$apiTier = "Premium (OnPrem)"}
-                    Write-Host "    " $conDetails.displayName " (" $apiTier ")"
-                    $paConnectionRefObj=@{
-                        type="Power App"
-                        ConnectionName=$conDetails.displayName
-                        Tier=$apiTier
-                        Environment=$e.displayname
-                        AppFlowName=$pa.AppName
-                    }
-                    $powerAppConnectionReferences+=$(new-object psobject -Property $paConnectionRefObj)
-                } #foreach $conId
-            } #foreach $con
-        } #foreach $conRef
-    } #foreach power app
-} #foreach environment
- 
-$powerAppConnectionReferences | Export-Csv "$outputFilelocation\powerAppConnectionReferences.csv" -NoTypeInformation
-$powerAppObjects | Export-Csv "$outputFilelocation\powerAppObjects.csv" -NoTypeInformation
-$powerAppRoles | Export-Csv "$outputFilelocation\powerAppRoles.csv" -NoTypeInformation 
-
-
-
-$environments=Get-AdminPowerAppEnvironment
-
-$powerapps = Get-AdminPowerApp -EnvironmentName $environments[0].EnvironmentName
-
-$conRefs=Get-AdminPowerAppConnectionReferences -EnvironmentName $environments[0].EnvironmentName -AppName $powerapps[0].AppName
-#>
