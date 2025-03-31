@@ -1,3 +1,4 @@
 Testing.ps1
 env.ps1
 Power-Platform/GetCopilotsFromDataverse.ps1
+Azure/ManageFabricCapacity.ps1

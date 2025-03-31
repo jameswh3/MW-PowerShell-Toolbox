@@ -1,9 +1,6 @@
 #Requires -Modules Microsoft.PowerApps.Administration.PowerShell
 
 function Get-PowerPlatformEnvironmentInfo {
-    param (
-        [string]$outputFilelocation = "C:\temp"
-    )
     BEGIN {
         Add-PowerAppsAccount -Endpoint prod
         $environments=Get-AdminPowerAppEnvironment
@@ -24,4 +21,4 @@ function Get-PowerPlatformEnvironmentInfo {
     }
 }
 
-Get-PowerPlatformEnvironmentInfo | Export-Csv -Path "$outputFilelocation\PowerPlatformEnvironmentInfo.csv" -NoTypeInformation -Force
+Get-PowerPlatformEnvironmentInfo | Export-Csv -Path "c:\temp\PowerPlatformEnvironmentInfo.csv" -NoTypeInformation -Force

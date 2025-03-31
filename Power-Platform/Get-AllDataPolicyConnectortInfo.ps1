@@ -1,8 +1,6 @@
 #Requires -Modules Microsoft.PowerApps.Administration.PowerShell
 
 
-
-
 function GetAllDataPolicyConnectorInfo {
     BEGIN {
         Add-PowerAppsAccount -Endpoint prod
@@ -20,35 +18,35 @@ function GetAllDataPolicyConnectorInfo {
             $environments=$dp.Environments | Join-String -Property name -Separator ","
 
             #foreach connector in businessdatagroups, get the connector name and id and flag as business data group
-            foreach ($bdp in $dp.BusinessDataGroup) {
+            foreach ($dg in $dp.BusinessDataGroup) {
                 $dataPolicyDatum= New-Object PSObject
                 $dataPolicyDatum | Add-Member NoteProperty PolicyName($dataPolicyName)
                 $dataPolicyDatum | Add-Member NoteProperty PolicyId($dataPolicyId)
                 $dataPolicyDatum | Add-Member NoteProperty Environments($environments)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorName($bdp.Name)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorId($bdp.Id)
+                $dataPolicyDatum | Add-Member NoteProperty ConnectorName($dg.Name)
+                $dataPolicyDatum | Add-Member NoteProperty ConnectorId($dg.Id)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorType("Business Data Group")
                 $dataPolicyData+=$dataPolicyDatum
             }
             #foreach connector in non-businessdatagroup, get the connector name and id and flag as business data group
-            foreach ($bdp in $dp.NonBusinessDataGroup) {
+            foreach ($dg in $dp.NonBusinessDataGroup) {
                 $dataPolicyDatum= New-Object PSObject
                 $dataPolicyDatum | Add-Member NoteProperty PolicyName($dataPolicyName)
                 $dataPolicyDatum | Add-Member NoteProperty PolicyId($dataPolicyId)
                 $dataPolicyDatum | Add-Member NoteProperty Environments($environments)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorName($bdp.Name)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorId($bdp.Id)
+                $dataPolicyDatum | Add-Member NoteProperty ConnectorName($dg.Name)
+                $dataPolicyDatum | Add-Member NoteProperty ConnectorId($dg.Id)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorType("Non Business Data Group")
                 $dataPolicyData+=$dataPolicyDatum
             }
             #foreach connector in businessdatagroups, get the connector name and id and flag as business data group
-            foreach ($bdp in $dp.BlockedGroup) {
+            foreach ($dg in $dp.BlockedGroup) {
                 $dataPolicyDatum= New-Object PSObject
                 $dataPolicyDatum | Add-Member NoteProperty PolicyName($dataPolicyName)
                 $dataPolicyDatum | Add-Member NoteProperty PolicyId($dataPolicyId)
                 $dataPolicyDatum | Add-Member NoteProperty Environments($environments)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorName($bdp.Name)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorId($bdp.Id)
+                $dataPolicyDatum | Add-Member NoteProperty ConnectorName($dg.Name)
+                $dataPolicyDatum | Add-Member NoteProperty ConnectorId($dg.Id)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorType("Blocked")
                 $dataPolicyData+=$dataPolicyDatum
             }
