@@ -25,7 +25,7 @@ function GetAllDataPolicyConnectorInfo {
                 $dataPolicyDatum | Add-Member NoteProperty Environments($environments)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorName($dg.Name)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorId($dg.Id)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorType("Business Data Group")
+                $dataPolicyDatum | Add-Member NoteProperty DataGroup("Business Data Group")
                 $dataPolicyData+=$dataPolicyDatum
             }
             #foreach connector in non-businessdatagroup, get the connector name and id and flag as business data group
@@ -36,7 +36,7 @@ function GetAllDataPolicyConnectorInfo {
                 $dataPolicyDatum | Add-Member NoteProperty Environments($environments)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorName($dg.Name)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorId($dg.Id)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorType("Non Business Data Group")
+                $dataPolicyDatum | Add-Member NoteProperty DataGroup("Non Business Data Group")
                 $dataPolicyData+=$dataPolicyDatum
             }
             #foreach connector in businessdatagroups, get the connector name and id and flag as business data group
@@ -47,7 +47,7 @@ function GetAllDataPolicyConnectorInfo {
                 $dataPolicyDatum | Add-Member NoteProperty Environments($environments)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorName($dg.Name)
                 $dataPolicyDatum | Add-Member NoteProperty ConnectorId($dg.Id)
-                $dataPolicyDatum | Add-Member NoteProperty ConnectorType("Blocked")
+                $dataPolicyDatum | Add-Member NoteProperty DataGroup("Blocked")
                 $dataPolicyData+=$dataPolicyDatum
             }
         }
