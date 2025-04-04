@@ -4,12 +4,13 @@
 $startDate = (get-date).AddDays(-7).tostring("yyyy-MM-dd")
 $endDate = (get-date).tostring("yyyy-MM-dd")
 $upn = read-host "Enter your UPN"
+$excludeBotIconUpdates=$true #the bot icon updates include base64 representations of the icon, which are large and not useful for most purposes.  If you want to include them, set this to $false.
 
 #Exchange Online Management Session; $set upn variable prior to running
 Connect-ExchangeOnline -UserPrincipalName $upn
 
 #region - Get All Record Types for the Date Range
-$sessionId = "All RecordTypes from $startDate to $endDate 4"
+$sessionId = "All RecordTypes from $startDate to $endDate"
 $allResults=@()
 do {
       $currentResult=Search-UnifiedAuditLog `
@@ -17,7 +18,11 @@ do {
             -EndDate $endDate `
             -SessionCommand ReturnLargeSet `
             -SessionId $sessionId
-      $allResults += $currentResult
+      if ($currentResult.Operations -eq "BotUpdateOperation-BotIconUpdate" -and $excludeBotIconUpdates) {
+            #don't add the bot icon updates to the results
+      } else {
+            $allResults+=$currentResult
+      }
       write-host "Current Result Count: $($currentResult.Count)"
       write-host "All Result Count: $($allResults.Count)"
 } while ($currentResult.Count -ne 0)

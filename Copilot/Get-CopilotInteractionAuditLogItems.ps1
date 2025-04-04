@@ -32,7 +32,9 @@ $copilotData=@()
 
 foreach ($copilotResult in $allResults) {
       $auditData=ConvertFrom-JSON $copilotResult.AuditData
-      $copilotDatum= New-Object PSObject
+      $copilotDatum= New-Object PSObject  
+      $copilotDatum | Add-Member NoteProperty AgentName($auditData.AgentName)
+      $copilotDatum | Add-Member NoteProperty AgentId($auditData.AgentId)
       $copilotDatum | Add-Member NoteProperty EventDate($copilotResult.CreationDate)
       $copilotDatum | Add-Member NoteProperty AppIdentity($auditData.AppIdentity)
       $copilotDatum | Add-Member NoteProperty EventId($copilotResult.Identity)
@@ -54,6 +56,11 @@ foreach ($copilotResult in $allResults) {
             $messageCount++
       }
       $copilotDatum | Add-Member NoteProperty MessageCount ($messageCount)
+      $accessedResources=@()
+      foreach ($accessedResource in $auditData.CopilotEventData.AccessedResources) {
+            $accessedResources+=$accessedResource.Type
+      }
+      $copilotDatum | Add-Member NoteProperty AccessedResources($accessedResources -join ",")
       $copilotData+=$copilotDatum
 }
 
