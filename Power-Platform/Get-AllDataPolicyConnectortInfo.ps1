@@ -1,7 +1,7 @@
 #Requires -Modules Microsoft.PowerApps.Administration.PowerShell
 
 
-function GetAllDataPolicyConnectorInfo {
+function Get-AllDataPolicyConnectorInfo {
     BEGIN {
         Add-PowerAppsAccount -Endpoint prod
         $environments=get-AdminPowerAppEnvironment
@@ -57,4 +57,4 @@ function GetAllDataPolicyConnectorInfo {
     }
 }
 
-GetAllDataPolicyConnectorInfo | Export-Csv -Path "C:\temp\PowerPlatformDataPolicyConnectors.csv" -NoTypeInformation -Force
+Get-AllDataPolicyConnectorInfo | Export-Csv -Path "C:\temp\PowerPlatformDataPolicyConnectors.csv" -NoTypeInformation -Force

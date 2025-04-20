@@ -1,6 +1,6 @@
 #Requires -Modules ExchangeOnlineManagement
 
-$startDate = (get-date).AddDays(-7).tostring("yyyy-MM-dd")
+$startDate = (get-date).AddDays(-14).tostring("yyyy-MM-dd")
 $endDate = (get-date).tostring("yyyy-MM-dd")
 $upn = Read-Host "Enter your UPN"
 
@@ -10,7 +10,7 @@ Connect-ExchangeOnline -UserPrincipalName $upn
 
 #region - Get CopilotInteraction Events for the Date Range
 $recordType="CopilotInteraction"
-$sessionId = "$recordType from $startDate to $endDate 1"
+$sessionId = "$recordType from $startDate to $endDate"
 
 $allResults=@()
 do {
@@ -56,11 +56,30 @@ foreach ($copilotResult in $allResults) {
             $messageCount++
       }
       $copilotDatum | Add-Member NoteProperty MessageCount ($messageCount)
+      #Get Accessed Resources; note that when resource is a website, the Type is not present
       $accessedResources=@()
       foreach ($accessedResource in $auditData.CopilotEventData.AccessedResources) {
-            $accessedResources+=$accessedResource.Type
+            $accessedResources+=($accessedResource.Type) ? $accessedResource.Type : $accessedResource.SiteUrl
       }
-      $copilotDatum | Add-Member NoteProperty AccessedResources($accessedResources -join ",")
+      # Create a hashtable to store the counts of each string
+      if ($accessedResources.Count -gt 0) {
+            $accessedResourcesCounts = @{}
+            # Iterate through the array and count occurrences of each string
+            foreach ($item in $accessedResources) {
+                  write-host "For $($copilotDatum.EventId), Item: $item"
+                  $key=($item) ? $item : "No Type Defined"
+                  if ($accessedResourcesCounts.ContainsKey($key)) {
+                        $accessedResourcesCounts[$key]++
+                  } else {
+                        $accessedResourcesCounts[$key] = 1
+                  }
+            }
+            $resourceCountStrings = @($accessedResourcesCounts.GetEnumerator() | ForEach-Object { "$($_.Key) ($($_.Value))" })
+            $accessedResourcesCountsString = [string]::Join(", ", $resourceCountStrings)
+            $copilotDatum | Add-Member NoteProperty AccessedResources($accessedResourcesCountsString)
+      } else {
+            $copilotDatum | Add-Member NoteProperty AccessedResources("")
+      }
       $copilotData+=$copilotDatum
 }
 
