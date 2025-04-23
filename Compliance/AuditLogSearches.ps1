@@ -1,7 +1,7 @@
 #Requires -Modules ExchangeOnlineManagement
 
 
-$startDate = (get-date).AddDays(-7).tostring("yyyy-MM-dd")
+$startDate = (get-date).AddDays(-14).tostring("yyyy-MM-dd")
 $endDate = (get-date).tostring("yyyy-MM-dd")
 $upn = read-host "Enter your UPN"
 $excludeBotIconUpdates=$true #the bot icon updates include base64 representations of the icon, which are large and not useful for most purposes.  If you want to include them, set this to $false.
@@ -29,6 +29,5 @@ do {
 
 $allResults.Count
 #endregion
-
 
 $allResults | export-csv c:\temp\audit.csv
