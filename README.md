@@ -36,7 +36,11 @@ A collection of scripts that I use as part of my role as a Microsoft Modern Work
 |--------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | [Get-AllDataPolicyConnectortInfo.ps1](Power-Platform/Get-AllDataPolicyConnectortInfo.ps1) | Retrieves all Data Loss Prevention (DLP) policy connector information from the Power Platform admin center. |
 | [Get-EnvironmentInfo.ps1](Power-Platform/Get-EnvironmentInfo.ps1) | Retrieves information about Power Platform environments in your tenant. |
-| [InventoryAppsAndConnections.ps1](Power-Platform/InventoryAppsAndConnections.ps1) | Gets details for Power Apps and their Connections |
+| [Get-EnvironmentInfoFromCLI.ps1](Power-Platform/Get-EnvironmentInfoFromCLI.ps1) | Parses Power Platform CLI environment output into PowerShell objects for further analysis. |
+| [Get-PowerAppsAndConnections.ps1](Power-Platform/InventoryAppsAndConnections.ps1) | Gets details for Power Apps and their Connections. |
+| [Get-PowerAppRoleAssignments.ps1](Power-Platform/Get-PowerAppRoleAssignments.ps1) | Retrieves role assignments for Power Apps. |
+| [Get-PowerPlatformLicenseCounts.ps1](Power-Platform/Get-PowerPlatformLicenseCounts.ps1) | Retrieves license count information for Power Platform products. |
+
 
 ### SharePoint
 
