@@ -1,6 +1,5 @@
 #Requires -Modules Microsoft.PowerApps.Administration.PowerShell
 
-
 function Get-AllDataPolicyConnectorInfo {
     BEGIN {
         Add-PowerAppsAccount -Endpoint prod

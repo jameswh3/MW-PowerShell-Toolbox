@@ -7,7 +7,6 @@ $upn = Read-Host "Enter your UPN"
 #Exchange Online Management Session; $set upn variable prior to running
 Connect-ExchangeOnline -UserPrincipalName $upn
 
-
 #region - Get CopilotInteraction Events for the Date Range
 $recordType="CopilotInteraction"
 $sessionId = "$recordType from $startDate to $endDate"

@@ -39,3 +39,5 @@ function Get-PowerPlatformAppsAndConnections {
         return $powerAppsData
     }
 }
+
+Get-PowerPlatformAppsAndConnections | Export-Csv -Path "c:\temp\PowerPlatformAppsAndConnections.csv" -NoTypeInformation -Force

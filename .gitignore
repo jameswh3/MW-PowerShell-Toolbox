@@ -4,3 +4,7 @@ Power-Platform/GetCopilotsFromDataverse.ps1
 Azure/ManageFabricCapacity.ps1
 Power-Platform/TestingDataverse.ps1
 MsGraph/Add-UserToTeamsChat.ps1
+Power-Platform/Enable-PowerPlatCLIIntellisense.ps1
+Power-Platform/Add-AppUserviaCLI.ps1
+Power-Platform/Get-EnvironmentInfoFromCLI.ps1
+Power-Platform/temp.ps1
