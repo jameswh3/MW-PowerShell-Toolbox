@@ -1,4 +1,4 @@
-﻿function Create-OneDriveSites {
+﻿function New-OneDriveSites {
     param (
         $usernames,
         $batchsize=200,
@@ -30,4 +30,4 @@
     }
 }
 
-Create-OneDriveSites -usernames 'a','b','c','d','e','f','g'
+New-OneDriveSites -usernames 'a','b','c','d','e','f','g'
