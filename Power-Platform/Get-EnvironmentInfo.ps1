@@ -14,7 +14,6 @@ function Get-PowerPlatformEnvironmentInfo {
             $environmentDatum | Add-Member NoteProperty EnvironmentName($e.EnvironmentName)
             $environmentDatum | Add-Member NoteProperty EnvironmentDisplayName($e.DisplayName)
             $environmentDatum | Add-Member NoteProperty EnvironmentType($e.EnvironmentType)
-            $environmentDatum | Add-Member NoteProperty EnvironmentRegion($e.azureRegionHint)
             $environmentDatum | Add-Member NoteProperty EnvironmentUrl($e.Internal.Properties.linkedEnvironmentMetadata.instanceApiUrl)
             $environmentDatum | Add-Member NoteProperty BingChatEnabled($e.Internal.Properties.bingChatEnabled)
             $environmentDatum | Add-Member NoteProperty M365Enabled($e.Internal.Properties.M365Enabled)

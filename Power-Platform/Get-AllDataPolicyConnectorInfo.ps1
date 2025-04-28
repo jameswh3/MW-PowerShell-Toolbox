@@ -1,0 +1,1 @@
+Moved to https://github.com/jameswh3/MW-PowerShell-Toolbox/blob/master/Power-Platform/Get-AllDataPolicyConnectortInfo.ps1
