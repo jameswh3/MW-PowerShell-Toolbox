@@ -6,3 +6,4 @@ Power-Platform/Enable-PowerPlatCLIIntellisense.ps1
 Power-Platform/Get-EnvironmentInfoFromCLI.ps1
 Power-Platform/Get-FlowsAndConnections.ps1
 Power-Platform/Get-PowerPlatTenantSettingsViaAPI.ps1
+Misc/New-SelfSignedCert.ps1

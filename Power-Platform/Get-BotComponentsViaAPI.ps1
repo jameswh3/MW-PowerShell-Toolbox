@@ -5,7 +5,7 @@
     $tenantDomain="<your tenant domain>.onmicrosoft.com"
 #>
 
-function Get-CopilotAgentsViaAPI {
+function Get-BotComponentsViaAPI {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true, Position=0, HelpMessage="Enter the Azure AD application client ID")]
@@ -21,7 +21,7 @@ function Get-CopilotAgentsViaAPI {
         [string]$TenantDomain,
         
         [Parameter(Mandatory=$false, HelpMessage="Specify additional fields to retrieve")]
-        [string[]]$FieldList="botid,componentidunique,name,configuration,createdon,publishedon,_ownerid_value,_createdby_value,solutionid,modifiedon,_owninguser_value,schemaname,_modifiedby_value,_publishedby_value,authenticationmode,synchronizationstatus,ismanaged"
+        [string[]]$FieldList="botcomponentid,componenttype,data,description,filedata,filedata_name,name,schemaname,createdon,_createdby_value,modifiedon,_modifiedby_value,_parentbotid_value"
     )
     BEGIN {
         $tokenUrl = "https://login.microsoftonline.com/$TenantDomain/oauth2/v2.0/token"
@@ -32,7 +32,7 @@ function Get-CopilotAgentsViaAPI {
     }
     PROCESS {
             #get list of agents/copilots/bots
-        $response=Invoke-RestMethod -Uri "https://$OrgUrl/api/data/v9.2/bots?`$select=$FieldList" `
+        $response=Invoke-RestMethod -Uri "https://$OrgUrl/api/data/v9.2/botcomponents?`$select=$FieldList" `
             -Headers @{Authorization = "Bearer $($token.access_token)"}
     }
     END {

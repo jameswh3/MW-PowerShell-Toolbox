@@ -24,6 +24,12 @@ A collection of scripts that I use as part of my role as a Microsoft Modern Work
 | [Get-EntraUserInfo.ps1](Entra/Get-EntraUserInfo.ps1) | Connects to Entra and retrieves user information based on UPN. |
 | [Update-AzureADUserUPN.ps1](Entra/Update-AzureADUserUPN.ps1) | Updates the User Principal Name (UPN) for Azure AD users. |
 
+### Misc
+
+| Script Name | Description |
+|--------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| [ConvertTo-SharePointDriveId.ps1](Misc/ConvertTo-SharePointDriveId.ps1) | Converts SharePoint site, web, and list IDs into a SharePoint drive ID format. |
+
 ### MsGraph
 
 | Script Name | Description |
@@ -35,9 +41,9 @@ A collection of scripts that I use as part of my role as a Microsoft Modern Work
 | Script Name | Description |
 |--------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | [Get-AllDataPolicyConnectorInfo.ps1](Power-Platform/Get-AllDataPolicyConnectorInfo.ps1) | Retrieves all Data Loss Prevention (DLP) policy connector information from the Power Platform admin center. |
+| [Get-BotComponentsViaAPI.ps1](Power-Platform/Get-BotComponentsViaAPI.ps1) | Retrieves bot components from Dynamics 365 using the Web API. |
 | [Get-CopilotAgentsViaAPI.ps1](Power-Platform/Get-CopilotAgentsViaAPI.ps1) | Retrieves Copilot agents from Dynamics 365 using the Web API. |
 | [Get-EnvironmentInfo.ps1](Power-Platform/Get-EnvironmentInfo.ps1) | Retrieves information about Power Platform environments in your tenant. |
-| [Get-EnvironmentInfoFromCLI.ps1](Power-Platform/Get-EnvironmentInfoFromCLI.ps1) | Parses Power Platform CLI environment output into PowerShell objects for further analysis. |
 | [Get-PowerPlatformUsageReports.ps1](Power-Platform/Get-PowerPlatformUsageReports.ps1) | Downloads usage reports for Power Platform services using the (undocumented and not officially supported) licensing API. |
 | [InventoryAppsAndConnections.ps1](Power-Platform/InventoryAppsAndConnections.ps1) | Gets details for Power Apps and their Connections. |
 
