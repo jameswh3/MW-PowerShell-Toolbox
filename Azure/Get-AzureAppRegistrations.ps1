@@ -8,4 +8,4 @@ Connect-AzAccount
 $appRegistrations = Get-AzADApplication
 
 # Display Name and AppId
-$appRegistrations | Select-Object DisplayName, AppId | Sort-Object DisplayName | Format-Table -AutoSize |
+$appRegistrations | Select-Object DisplayName, AppId | Sort-Object DisplayName | Format-Table -AutoSize
