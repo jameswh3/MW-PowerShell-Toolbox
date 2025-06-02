@@ -7,3 +7,8 @@ Power-Platform/Get-EnvironmentInfoFromCLI.ps1
 Power-Platform/Get-FlowsAndConnections.ps1
 Power-Platform/Get-PowerPlatTenantSettingsViaAPI.ps1
 Misc/New-SelfSignedCert.ps1
+Misc/ConvertTo-Png.ps1
+Power-Platform/GetPowerPlatformReports.iqpy
+Power-Platform/.env
+Power-Platform/GetPowerPlatformReports.ipynb
+SharePoint-Online/Set-SPOOrgAssetLibrary.ps1
