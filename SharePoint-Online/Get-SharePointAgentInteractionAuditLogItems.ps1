@@ -6,7 +6,7 @@ $upn = read-host "Enter your UPN"
 Connect-ExchangeOnline -UserPrincipalName $upn
 
 #region - Get All Record Types for the Date Range
-$sessionId = "FileUpload Operation SharePoint RecordTypes from $startDate to $endDate"
+$sessionId = "FileAccessed Operation SharePoint RecordTypes from $startDate to $endDate"
 $allResults=@()
 do {
       $currentResult=Search-UnifiedAuditLog `
