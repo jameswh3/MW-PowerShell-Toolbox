@@ -15,7 +15,7 @@ function Get-PowerPlatformUsageReports {
     )
     BEGIN {
         #connect and get access token
-        Connect-AzAccount
+        Connect-AzAccount -Tenant $TenantDomain -authscope 'https://licensing.powerplatform.microsoft.com' -ErrorAction Stop
         $token = (Get-AzAccessToken -ResourceUrl 'https://licensing.powerplatform.microsoft.com').token
         $startDateString = $StartDate.ToString("yyyy-MM-dd")
         $endDateString = $EndDate.ToString("yyyy-MM-dd")
