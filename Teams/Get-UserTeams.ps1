@@ -4,10 +4,10 @@
 
 Connect-MgGraph -ClientId $ClientId `
     -TenantId $TenantDomain `
-    -Scopes "User.Read","Team.ReadBasic.All","TeamMember.ReadWrite.All","ChannelMessage.ReadWrite","TeamSettings.ReadWrite.All","ChannelMessage.Read.All"
+    -Scopes "User.Read","Group.Read.All","Team.ReadBasic.All","TeamMember.ReadWrite.All","ChannelMessage.ReadWrite","TeamSettings.ReadWrite.All","ChannelMessage.Read.All"
 
 $teamsResponse=Invoke-MgGraphRequest -Method GET `
-    -Uri "https://graph.microsoft.com/v1.0/me/joinedTeams" `
+    -Uri "https://graph.microsoft.com/v1.0/teams" `
     -ErrorAction Stop
 
 $teams=$teamsResponse.value

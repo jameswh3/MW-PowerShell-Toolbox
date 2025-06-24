@@ -1,6 +1,3 @@
-
-
-
 Connect-MgGraph -ClientId $clientId `
     -TenantId $tenantId `
     -Certificate $cert `
