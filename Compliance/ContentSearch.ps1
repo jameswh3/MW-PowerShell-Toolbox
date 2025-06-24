@@ -22,13 +22,6 @@ function Get-ComplianceSearchActionStatus {
     return $searchActionStatus.Status
 }
 
-<# Set Vars below as apporpriate
-    $mailbox = "<mailbox email address>"
-    $startDate="2025-02-20"
-    $endDate="2025-02-22"
-    $kql="Subject:`"`" AND sent>=$startDate AND sent<=$endDate"
-    $complianceSearchName="Copilot Thread Search - $($mailbox.replace("@","_").replace(".","_"))"
-#>
 
 #Connect to Compliance Session
 Connect-IPPSSession -UserPrincipalName $upn

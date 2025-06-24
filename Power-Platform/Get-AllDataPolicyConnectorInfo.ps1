@@ -55,5 +55,3 @@ function Get-AllDataPolicyConnectorInfo {
         return $dataPolicyData
     }
 }
-
-Get-AllDataPolicyConnectorInfo | Export-Csv -Path "C:\temp\PowerPlatformDataPolicyConnectors.csv" -NoTypeInformation -Force

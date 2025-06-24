@@ -1,4 +1,4 @@
-﻿function update-AADUserUPN {
+﻿function Update-AADUserUPN {
     param (
         $originalUpn,
         $newUpn,

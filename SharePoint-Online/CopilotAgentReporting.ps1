@@ -1,8 +1,6 @@
-
-Get-Module -Name Microsoft.Online.SharePoint.PowerShell -ListAvailable
 import-module -name microsoft.online.sharepoint.powershell -UseWindowsPowerShell
 
-Connect-SPOService -Url "https://<your tenant>-admin.sharepoint.com"
+Connect-SPOService -Url $spoAdminUrl
 
 Start-SPOCopilotAgentInsightsReport -ReportPeriodInDays 28
 

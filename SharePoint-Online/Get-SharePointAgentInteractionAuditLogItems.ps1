@@ -1,6 +1,12 @@
-$startDate = "2025-02-25"
-$endDate = "2025-02-28"
-$upn = read-host "Enter your UPN"
+if ([string]::IsNullOrEmpty($startDate)) {
+    $startDate = (get-date).AddDays(-7).tostring("yyyy-MM-dd")
+}
+if ([string]::IsNullOrEmpty($endDate)) {
+    $endDate = (get-date).tostring("yyyy-MM-dd")
+}
+if ([string]::IsNullOrEmpty($upn)) {
+    $upn = Read-Host "Enter your UPN"
+}
 
 #Exchange Online Management Session; $set upn variable prior to running
 Connect-ExchangeOnline -UserPrincipalName $upn

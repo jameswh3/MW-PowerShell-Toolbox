@@ -1,23 +1,24 @@
-Connect-MgGraph -ClientId $ClientId `
-    -TenantId $TenantDomain `
-    -Scopes "User.Read","ChannelSettings.ReadWrite.All","Group.Read.All","Team.ReadBasic.All","TeamMember.ReadWrite.All","ChannelMessage.ReadWrite","TeamSettings.ReadWrite.All","ChannelMessage.Read.All"
+Connect-MgGraph -ClientId $clientId `
+    -TenantId $tenantDomain `
+    -Scopes "User.Read","ChannelSettings.ReadWrite.All","Team.ReadBasic.All","TeamSettings.ReadWrite.All"
 
 
-$body = @{
+$moderationSettings = @{
     "moderationSettings"= @{
         "userNewMessageRestriction"= "moderators"
         "replyRestriction" = "authorAndModerators"
         "allowNewMessageFromBots" = "false"
         "allowNewMessageFromConnectors"= "false"
-        }
     }
+}
 
-$updateChannelResponse=Invoke-MgGraphRequest -Method PATCH `
+Invoke-MgGraphRequest -Method PATCH `
         -Uri "https://graph.microsoft.com/beta/teams/$($teamId)/channels/$($channelId)" `
         -ErrorAction Stop `
-        -Body $body
-
+        -Body $moderationSettings
 
 $channelResponse=Invoke-MgGraphRequest -Method GET `
         -Uri "https://graph.microsoft.com/beta/teams/$($teamId)/channels/$($channelId)" `
         -ErrorAction Stop
+
+$channelResponse.moderationSettings | Format-List

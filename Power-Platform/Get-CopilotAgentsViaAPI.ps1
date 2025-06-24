@@ -1,9 +1,3 @@
-<# Uncomment and modify the variables for your context
-    $clientId="<your client id>"
-    $clientSecret="<your client secret>"
-    $orgUrl="<your org>.crm.dynamics.com"
-    $tenantDomain="<your tenant domain>.onmicrosoft.com"
-#>
 
 function Get-CopilotAgentsViaAPI {
     [CmdletBinding()]

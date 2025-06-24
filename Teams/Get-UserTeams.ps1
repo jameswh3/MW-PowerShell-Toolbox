@@ -1,13 +1,12 @@
 
 # Delegated Permissions
 
-
 Connect-MgGraph -ClientId $ClientId `
     -TenantId $TenantDomain `
     -Scopes "User.Read","Group.Read.All","Team.ReadBasic.All","TeamMember.ReadWrite.All","ChannelMessage.ReadWrite","TeamSettings.ReadWrite.All","ChannelMessage.Read.All"
 
 $teamsResponse=Invoke-MgGraphRequest -Method GET `
-    -Uri "https://graph.microsoft.com/v1.0/teams" `
+    -Uri "https://graph.microsoft.com/me/joinedteams" `
     -ErrorAction Stop
 
 $teams=$teamsResponse.value
@@ -32,6 +31,5 @@ foreach ($t in $teams) {
         } #foreach message
     } #foreach channel
 } #foreach team
-
 
 Disconnect-mgGraph

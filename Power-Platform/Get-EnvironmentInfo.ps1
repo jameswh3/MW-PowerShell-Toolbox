@@ -26,5 +26,3 @@ function Get-PowerPlatformEnvironmentInfo {
         return $environmentData
     }
 }
-
-Get-PowerPlatformEnvironmentInfo | Export-Csv -Path "c:\temp\PowerPlatformEnvironmentInfo.csv" -NoTypeInformation -Force

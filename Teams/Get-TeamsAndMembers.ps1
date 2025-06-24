@@ -1,6 +1,4 @@
 # Requires MicrosoftTeams PowerShell module
-# Install-Module -Name PowerShellGet -Force
-# Install-Module -Name MicrosoftTeams -Force
 
 # Connect to Microsoft Teams
 Connect-MicrosoftTeams
@@ -30,6 +28,3 @@ foreach ($team in $teams) {
 
 # Output results to console
 $results | Format-Table -AutoSize
-
-# Optionally export to CSV
-# $results | Export-Csv -Path "./TeamsAndMembers.csv" -NoTypeInformation
