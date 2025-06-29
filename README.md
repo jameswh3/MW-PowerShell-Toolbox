@@ -2,14 +2,13 @@
 
 A collection of scripts that I use as part of my role as a Microsoft Modern Work Technical Specialist.
 
-
 ## Azure
 
 ### [Get-AzureAppRegistrations.ps1](Azure/Get-AzureAppRegistrations.ps1)
 
 Retrieves all Azure App Registrations and displays their names and App IDs.
 
-#### *Usage Example*
+#### Get-AzureAppRegistrations.ps1 Example
 
 ```PowerShell
 # Run the script directly - it handles authentication and retrieval
@@ -22,7 +21,7 @@ Retrieves all Azure App Registrations and displays their names and App IDs.
 
 Searches the unified audit log for specified date ranges.
 
-#### *AuditLogSearches Example*
+#### AuditLogSearches.ps1 Example
 
 ```PowerShell
 # Set your parameters
@@ -38,7 +37,7 @@ $excludeBotIconUpdates = $true
 
 Performs a compliance content search and exports the results.
 
-#### *ContentSearch Example*
+#### ContentSearch.ps1 Example
 
 ```PowerShell
 # Set your search parameters
@@ -59,7 +58,7 @@ $kql="Subject:`"`" AND sent>=$startDate AND sent<=$endDate"
 
 Retrieves audit log entries for Copilot bot creation events.
 
-#### *CopilotCreation Example*
+#### Get-CopilotCreationAuditLogItems.ps1 Example
 
 ```PowerShell
 # Set your parameters
@@ -75,7 +74,7 @@ $endDate = "2025-06-24"
 
 Retrieves audit log entries for Copilot interaction events.
 
-#### *CopilotInteraction Example*
+#### Get-CopilotInteractionAuditLogItems.ps1 Example
 
 ```PowerShell
 
@@ -93,7 +92,7 @@ Retrieves audit log entries for Copilot interaction events.
 
 Retrieves detailed information about an Entra ID user.
 
-#### *EntraUserInfo Example*
+#### Get-EntraUserInfo.ps1 Example
 
 ```PowerShell
 # Set the user UPN
@@ -107,7 +106,7 @@ $upn = "user@yourdomain.com"
 
 Gets license information for Entra ID users.
 
-#### *EntraUserLicense Example*
+#### Get-EntraUserLicenseInfo.ps1 Example
 
 ```PowerShell
 # Set the user UPN
@@ -121,7 +120,7 @@ $upn = "user@yourdomain.com"
 
 Updates the User Principal Name (UPN) for Azure AD users.
 
-#### *UpdateAzureADUserUPN Example*
+#### Update-AzureADUserUPN.ps1 Example
 
 ```PowerShell
 # Set the old and new UPN values
@@ -137,7 +136,7 @@ Update-AADUserUPN -originalUpn "user@olddomain.com" `
 
 Converts SharePoint site information to Drive IDs for Microsoft Graph API usage.
 
-#### *ConvertToSharePointDriveId Example*
+#### ConvertTo-SharePointDriveId.ps1 Example
 
 ```PowerShell
 # Set the SharePoint site URL
@@ -153,7 +152,7 @@ ConvertTo-SharePointDriveId -siteId "<site GUID>" `
 
 Generates comprehensive Microsoft 365 usage and activity reports using Microsoft Graph.
 
-#### *M365Reporting Example*
+#### M365Reporting.ps1 Example
 
 ```PowerShell
 # Set your reporting parameters
@@ -170,7 +169,7 @@ $clientId = "your-app-registration-id"
 
 Adds users to Power Platform applications via CLI commands.
 
-#### *AddAppUserviaCLI Example*
+#### Add-AppUserviaCLI.ps1 Example
 
 ```PowerShell
 # Set your parameters
@@ -186,7 +185,7 @@ $appId = "your-app-registration-id"
 
 Retrieves information about all data policy connectors in the Power Platform tenant.
 
-#### *GetAllDataPolicyConnectorInfo Example*
+#### Get-AllDataPolicyConnectorInfo.ps1 Example
 
 ```PowerShell
 # Run the script directly - it handles authentication and data retrieval
@@ -197,7 +196,7 @@ Get-AllDataPolicyConnectorInfo | Export-Csv -Path "C:\temp\PowerPlatformDataPoli
 
 Gets bot components information using Power Platform APIs.
 
-#### *GetBotComponentsViaAPI Example*
+#### Get-BotComponentsViaAPI.ps1 Example
 
 ```PowerShell
 # Set your environment parameters
@@ -218,7 +217,7 @@ Get-BotComponentsViaAPI -ClientId $clientId `
 
 Retrieves Copilot agents information via Power Platform APIs.
 
-#### *GetCopilotAgentsViaAPI Example*
+#### Get-CopilotAgentsViaAPI.ps1 Example
 
 ```PowerShell
 # Run the script
@@ -235,7 +234,7 @@ Get-CopilotAgentsViaAPI -ClientId "<your client id>" `
 
 Gets Copilots and their components from all Power Platform environments.
 
-#### *GetCopilotsAndComponentsFromAllEnvironments Example*
+#### Get-CopilotsAndComponentsFromAllEnvironments.ps1 Example
 
 ```PowerShell
 Get-CopoilotsAndCompnonentsFromAllEnvironments.ps1 -ClientId "<client id>" `
@@ -248,7 +247,7 @@ Get-CopoilotsAndCompnonentsFromAllEnvironments.ps1 -ClientId "<client id>" `
 
 Retrieves detailed information about Power Platform environments.
 
-#### *GetEnvironmentInfo Example*
+#### Get-EnvironmentInfo.ps1 Example
 
 ```PowerShell
 Get-PowerPlatformEnvironmentInfo | Export-Csv -Path "c:\temp\PowerPlatformEnvironmentInfo.csv" -NoTypeInformation -Force
@@ -258,7 +257,7 @@ Get-PowerPlatformEnvironmentInfo | Export-Csv -Path "c:\temp\PowerPlatformEnviro
 
 Gets Power Apps and their connections across all environments.
 
-#### *GetPowerAppsAndConnections Example*
+#### Get-PowerAppsAndConnections.ps1 Example
 
 ```PowerShell
 # Set output parameters
@@ -269,7 +268,7 @@ Get-PowerPlatformAppsAndConnections | Export-Csv -Path "c:\temp\PowerPlatformApp
 
 Generates usage reports for Power Platform services and applications.
 
-#### *Example*
+#### Get-PowerPlatformUsageReports.ps1 Example
 
 ```PowerShell
 $tenantDomain=",yourdomain.onmicrosoft.com"
@@ -295,6 +294,8 @@ foreach ($report in $usageReports.Keys) {
 
 Retrieves information about Power Platform Environments.
 
+#### Get-PowerPlatTenantSettingsViaAPI.ps1 Example
+
 ```PowerShell
 #Modify the following variables with your own values
     $clientId="<your client id>"
@@ -310,7 +311,7 @@ Retrieves information about Power Platform Environments.
 
 Creates an inventory of SharePoint on-premises farm components and configuration.
 
-#### *InventorySPFarm Example*
+#### Inventory-SPFarm.ps1 Example
 
 ```PowerShell
 # Set your SharePoint farm parameters
@@ -347,7 +348,7 @@ Inventory-SPFarm `
 
 Generates reports on Copilot agent usage and activities in SharePoint Online.
 
-#### *CopilotAgentReporting Example*
+#### CopilotAgentReporting.ps1 Example
 
 ```PowerShell
 $spoAdminUrl="https://<your tenant>-admin.sharepoint.com"
@@ -360,7 +361,7 @@ $spoAdminUrl="https://<your tenant>-admin.sharepoint.com"
 
 Retrieves audit log entries for SharePoint agent creation events.
 
-#### *GetSharePointAgentCreationAuditLogItems Example*
+#### Get-SharePointAgentCreationAuditLogItems.ps1 Example
 
 ```PowerShell
 # Set your parameters
@@ -376,7 +377,7 @@ $endDate = "2025-06-24"
 
 Retrieves audit log entries for SharePoint agent interaction events.
 
-#### *GetSharePointAgentInteractionAuditLogItems Example*
+#### Get-SharePointAgentInteractionAuditLogItems.ps1 Example
 
 ```PowerShell
 # Set your parameters
@@ -392,7 +393,7 @@ $endDate = "2025-06-24"
 
 Creates new OneDrive sites for users in SharePoint Online.
 
-#### *NewOneDriveSites Example*
+#### New-OneDriveSites.ps1 Example
 
 ```PowerShell
 # Set your parameters
@@ -410,7 +411,7 @@ New-OneDriveSites -usernames $usernames -batchsize $batchSize -tenantname $tenan
 
 Retrieves all Microsoft Teams using Microsoft Graph API.
 
-#### *GetAllTeamsViaGraph Example*
+#### Get-AllTeamsViaGraph.ps1 Example
 
 ```PowerShell
 # Set your Graph API parameters
@@ -426,7 +427,7 @@ $cert = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object {$_.Subject -l
 
 Gets Teams and their membership information.
 
-#### *GetTeamsAndMembers Example*
+#### Get-TeamsAndMembers.ps1 Example
 
 ```PowerShell
 # Run the script
@@ -437,7 +438,7 @@ Gets Teams and their membership information.
 
 Retrieves all Teams that a specific user is a member of.
 
-#### *GetUserTeams Example*
+#### Get-UserTeams.ps1 Example
 
 ```PowerShell
 # Set the user parameters
@@ -452,7 +453,7 @@ $tenantId = "your-tenant-id"
 
 Configures moderation settings for Teams channels.
 
-#### *SetChannelModerationSettings Example*
+#### Set-ChannelModerationSettings.ps1 Example
 
 ```PowerShell
 # Set your channel parameters
@@ -471,4 +472,51 @@ $moderationSettings = @{
 
 # Run the script
 .\Teams\Set-ChannelModerationSettings.ps1
+```
+
+### [Export-TeamsUserActivityReport.ps1](Teams/Export-TeamsUserActivityReport.ps1)
+
+Exports a report of user activity in Microsoft Teams.
+
+#### Export-TeamsUserActivityReport.ps1 Example
+
+```PowerShell
+# Set your parameters
+$startDate = "2025-06-01"
+$endDate = "2025-06-30"
+$outputPath = "C:\temp\TeamsUserActivityReport.csv"
+
+# Run the script
+.\Teams\Export-TeamsUserActivityReport.ps1 -StartDate $startDate `
+    -EndDate $endDate `
+    -OutputPath $outputPath
+```
+
+### [Get-TeamChannelMessages.ps1](Teams/Get-TeamChannelMessages.ps1)
+
+Retrieves messages from a specific channel in a Microsoft Team.
+
+#### Get-TeamChannelMessages.ps1 Example
+
+```PowerShell
+# Set your parameters
+$teamId = "<your team id>"
+$channelId = "<your channel id>"
+
+# Run the script
+.\Teams\Get-TeamChannelMessages.ps1
+```
+
+### [Get-TeamChannels.ps1](Teams/Get-TeamChannels.ps1)
+
+Retrieves all channels within a specified Microsoft Team.
+
+#### Get-TeamChannels.ps1 Example
+
+```PowerShell
+# Set your parameters
+$teamId = "<your team id>"
+
+# Run the script
+.\Teams\Get-TeamChannels.ps1
 ```
