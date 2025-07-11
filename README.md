@@ -163,6 +163,23 @@ $clientId = "your-app-registration-id"
 .\MsGraph\M365Reporting.ps1
 ```
 
+### [Get-OnlineMeetingRecordings.ps1](MsGraph/Get-OnlineMeetingRecordings.ps1)
+
+Retrieves online meeting recordings for a specific user within a date range using Microsoft Graph.
+
+#### Get-OnlineMeetingRecordings.ps1 Example
+
+```PowerShell
+# Set your parameters
+$clientId = "your-app-registration-id"
+$tenantId = "your-tenant-id"
+$cert = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object {$_.Subject -like "*YourCertName*"}
+$meetingOrganizerUserId = "user@yourdomain.com"
+
+# Run the script
+.\MsGraph\Get-OnlineMeetingRecordings.ps1
+```
+
 ## Power-Platform
 
 ### [Add-AppUserviaCLI.ps1](Power-Platform/Add-AppUserviaCLI.ps1)
@@ -344,6 +361,28 @@ Inventory-SPFarm `
 
 ## SharePoint-Online
 
+### [Add-OwnersToSharePointSite.ps1](SharePoint-Online/Add-OwnersToSharePointSite.ps1)
+
+Adds users as owners to a SharePoint site using certificate-based authentication.
+
+#### Add-OwnersToSharePointSite.ps1 Example
+
+```PowerShell
+# Set your parameters
+$siteUrl = "https://contoso.sharepoint.com/sites/yoursite"
+$ownerEmails = @("user1@contoso.com", "user2@contoso.com")
+$clientId = "your-app-registration-id"
+$tenant = "contoso.onmicrosoft.com"
+$certificatePath = "C:\path\to\certificate.pfx"
+
+# Run the function
+Add-OwnersToSharePointSite -SiteUrl $siteUrl `
+    -OwnerEmails $ownerEmails `
+    -ClientId $clientId `
+    -Tenant $tenant `
+    -CertificatePath $certificatePath
+```
+
 ### [CopilotAgentReporting.ps1](SharePoint-Online/CopilotAgentReporting.ps1)
 
 Generates reports on Copilot agent usage and activities in SharePoint Online.
@@ -389,6 +428,59 @@ $endDate = "2025-06-24"
 .\SharePoint-Online\Get-SharePointAgentInteractionAuditLogItems.ps1
 ```
 
+### [New-HubSites.ps1](SharePoint-Online/New-HubSites.ps1)
+
+Creates SharePoint Online Hub Sites using PnP.PowerShell, with optional parent hub site association.
+
+#### New-HubSites.ps1 Example
+
+```PowerShell
+# Create hub sites
+$siteUrls = @("https://contoso.sharepoint.com/sites/Hub1", "https://contoso.sharepoint.com/sites/Hub2")
+$parentHubSiteId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Run the script
+.\SharePoint-Online\New-HubSites.ps1 -SiteUrls $siteUrls -ParentHubSiteId $parentHubSiteId
+```
+
+### [New-DemoProjectPlanDocs.ps1](SharePoint-Online/New-DemoProjectPlanDocs.ps1)
+
+Creates demo project plan documents with random team assignments and tasks.
+
+#### New-DemoProjectPlanDocs.ps1 Example
+
+```PowerShell
+# Requires ImportExcel and PSWriteWord modules
+# Run the script to generate project plan documents
+.\SharePoint-Online\New-DemoProjectPlanDocs.ps1
+```
+
+### [New-DemoProjectHubSites.ps1](SharePoint-Online/New-DemoProjectHubSites.ps1)
+
+Creates a complete demo environment with hub sites, regional sites, and project sites with proper associations.
+
+#### New-DemoProjectHubSites.ps1 Example
+
+```PowerShell
+# Run the script to create demo project hub structure
+.\SharePoint-Online\New-DemoProjectHubSites.ps1
+```
+
+### [New-HubSites.ps1](SharePoint-Online/New-HubSites.ps1)
+
+Creates SharePoint Online Hub Sites using PnP.PowerShell, with optional parent hub site association.
+
+#### New-HubSites.ps1 Example
+
+```PowerShell
+# Create hub sites
+$siteUrls = @("https://contoso.sharepoint.com/sites/Hub1", "https://contoso.sharepoint.com/sites/Hub2")
+$parentHubSiteId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Run the script
+.\SharePoint-Online\New-HubSites.ps1 -SiteUrls $siteUrls -ParentHubSiteId $parentHubSiteId
+```
+
 ### [New-OneDriveSites.ps1](SharePoint-Online/New-OneDriveSites.ps1)
 
 Creates new OneDrive sites for users in SharePoint Online.
@@ -403,6 +495,31 @@ $tenantName = "yourtenant"
 
 # Run the script function
 New-OneDriveSites -usernames $usernames -batchsize $batchSize -tenantname $tenantName
+```
+
+### [Upload-Documents.ps1](SharePoint-Online/Upload-Documents.ps1)
+
+Uploads documents to specified SharePoint sites and libraries using an input array.
+
+#### Upload-Documents.ps1 Example
+
+```PowerShell
+# Define documents to upload
+$documents = @(
+    @{
+        FilePath = "C:\temp\ProjectA Plan.docx"
+        SiteUrl = "https://contoso.sharepoint.com/sites/ProjectA"
+        Library = "Shared Documents"
+    },
+    @{
+        FilePath = "C:\temp\ProjectB Plan.docx"
+        SiteUrl = "https://contoso.sharepoint.com/sites/ProjectB"
+        Library = "Shared Documents"
+    }
+)
+
+# Run the script
+.\SharePoint-Online\Upload-Documents.ps1
 ```
 
 ## Teams

@@ -1,5 +1,5 @@
 #Requires -Modules Microsoft.Entra
 
-Connect-Entra -Scopes "User.Read.All" -UseDeviceCode
+Connect-Entra
 
 Get-EntraUser -UserId $upn
