@@ -15,6 +15,17 @@ Retrieves all Azure App Registrations and displays their names and App IDs.
 .\Azure\Get-AzureAppRegistrations.ps1
 ```
 
+### [Start-AzureVMs.ps1](Azure/Start-AzureVMs.ps1)
+
+Starts Azure Virtual Machines across resource groups.
+
+#### Start-AzureVMs.ps1 Example
+
+```PowerShell
+# Run the script
+.\Azure\Start-AzureVMs.ps1
+```
+
 ## Compliance
 
 ### [AuditLogSearches.ps1](Compliance/AuditLogSearches.ps1)
@@ -53,6 +64,33 @@ $kql="Subject:`"`" AND sent>=$startDate AND sent<=$endDate"
 ```
 
 ## Copilot
+
+
+### [Get-ConversationTranscriptsViaAPI.ps1](Power-Platform/Get-ConversationTranscriptsViaAPI.ps1)
+
+Retrieves conversation transcripts from Power Platform bots via API within a specified date range.
+
+#### Get-ConversationTranscriptsViaAPI.ps1 Example
+
+```PowerShell
+# Set your environment parameters
+$clientId = "<your client id>"
+$clientSecret = "<your client secret>"
+$orgUrl = "<your org>.crm.dynamics.com"
+$tenantDomain = "<your tenant domain>.onmicrosoft.com"
+$startDate = "2025-06-01"
+$endDate = "2025-06-30"
+
+# Run the script
+Get-ConversationTranscriptsViaAPI -ClientId $clientId `
+    -ClientSecret $clientSecret `
+    -OrgUrl $orgUrl `
+    -TenantDomain $tenantDomain `
+    -StartDate $startDate `
+    -EndDate $endDate `
+    -FieldList "content,createdon,conversationtranscriptid,_bot_conversationtranscriptid_value,metadata" `
+    | Export-Csv -Path "C:\temp\conversation-transcripts.csv" -NoTypeInformation
+```
 
 ### [Get-CopilotCreationAuditLogItems.ps1](Copilot/Get-CopilotCreationAuditLogItems.ps1)
 
@@ -383,11 +421,11 @@ Add-OwnersToSharePointSite -SiteUrl $siteUrl `
     -CertificatePath $certificatePath
 ```
 
-### [CopilotAgentReporting.ps1](SharePoint-Online/CopilotAgentReporting.ps1)
+### [Get-CopilotAgentReport.ps1](SharePoint-Online/Get-CopilotAgentReport.ps1)
 
 Generates reports on Copilot agent usage and activities in SharePoint Online.
 
-#### CopilotAgentReporting.ps1 Example
+#### Get-CopilotAgentReport.ps1 Example
 
 ```PowerShell
 $spoAdminUrl="https://<your tenant>-admin.sharepoint.com"
@@ -466,21 +504,6 @@ Creates a complete demo environment with hub sites, regional sites, and project 
 .\SharePoint-Online\New-DemoProjectHubSites.ps1
 ```
 
-### [New-HubSites.ps1](SharePoint-Online/New-HubSites.ps1)
-
-Creates SharePoint Online Hub Sites using PnP.PowerShell, with optional parent hub site association.
-
-#### New-HubSites.ps1 Example
-
-```PowerShell
-# Create hub sites
-$siteUrls = @("https://contoso.sharepoint.com/sites/Hub1", "https://contoso.sharepoint.com/sites/Hub2")
-$parentHubSiteId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-
-# Run the script
-.\SharePoint-Online\New-HubSites.ps1 -SiteUrls $siteUrls -ParentHubSiteId $parentHubSiteId
-```
-
 ### [New-OneDriveSites.ps1](SharePoint-Online/New-OneDriveSites.ps1)
 
 Creates new OneDrive sites for users in SharePoint Online.
@@ -495,6 +518,20 @@ $tenantName = "yourtenant"
 
 # Run the script function
 New-OneDriveSites -usernames $usernames -batchsize $batchSize -tenantname $tenantName
+```
+
+### [Set-SPOOrgAssetLibrary.ps1](SharePoint-Online/Set-SPOOrgAssetLibrary.ps1)
+
+Configures SharePoint Online organizational asset libraries for Office templates and images.
+
+#### Set-SPOOrgAssetLibrary.ps1 Example
+
+```PowerShell
+# Update the tenant variable with your tenant name
+$tenant = "contoso"
+
+# Run the script to configure organizational asset libraries
+.\SharePoint-Online\Set-SPOOrgAssetLibrary.ps1
 ```
 
 ### [Upload-Documents.ps1](SharePoint-Online/Upload-Documents.ps1)
@@ -540,6 +577,17 @@ $cert = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object {$_.Subject -l
 .\Teams\Get-AllTeamsViaGraph.ps1
 ```
 
+### [Get-ChannelMessages.ps1](Teams/Get-ChannelMessages.ps1)
+
+Retrieves messages from specified Teams channels.
+
+#### Get-ChannelMessages.ps1 Example
+
+```PowerShell
+# Run the script
+.\Teams\Get-ChannelMessages.ps1
+```
+
 ### [Get-TeamsAndMembers.ps1](Teams/Get-TeamsAndMembers.ps1)
 
 Gets Teams and their membership information.
@@ -566,6 +614,37 @@ $tenantId = "your-tenant-id"
 .\Teams\Get-UserTeams.ps1
 ```
 
+### [New-Channels.ps1](Teams/New-Channels.ps1)
+
+Creates new channels in a specified Microsoft Team.
+
+#### New-Channels.ps1 Example
+
+```PowerShell
+# Set your parameters
+$teamId = "<your team id>"
+$channelNames = @("General Discussion", "Project Updates", "Resources")
+
+# Run the script
+.\Teams\New-Channels.ps1 -TeamId $teamId -ChannelNames $channelNames
+```
+
+### [New-Teams.ps1](Teams/New-Teams.ps1)
+
+Creates new Microsoft Teams with specified names and optional owners/members.
+
+#### New-Teams.ps1 Example
+
+```PowerShell
+# Set your parameters
+$teamNames = @("Project Alpha", "Project Beta", "Project Gamma")
+$owner = "admin@yourdomain.com"
+$members = @("user1@yourdomain.com", "user2@yourdomain.com")
+
+# Run the script
+.\Teams\New-Teams.ps1 -TeamNames $teamNames -Owner $owner -Members $members
+```
+
 ### [Set-ChannelModerationSettings.ps1](Teams/Set-ChannelModerationSettings.ps1)
 
 Configures moderation settings for Teams channels.
@@ -577,7 +656,7 @@ Configures moderation settings for Teams channels.
 $clientId="<your client id>"
 $teamId = "<your team id>"
 $channelId = "<your-channel-id>"
-$tenantDomain
+$tenantDomain = "yourdomain.onmicrosoft.com"
 $moderationSettings = @{
     "moderationSettings"= @{
         "userNewMessageRestriction"= "moderators"
@@ -589,51 +668,4 @@ $moderationSettings = @{
 
 # Run the script
 .\Teams\Set-ChannelModerationSettings.ps1
-```
-
-### [Export-TeamsUserActivityReport.ps1](Teams/Export-TeamsUserActivityReport.ps1)
-
-Exports a report of user activity in Microsoft Teams.
-
-#### Export-TeamsUserActivityReport.ps1 Example
-
-```PowerShell
-# Set your parameters
-$startDate = "2025-06-01"
-$endDate = "2025-06-30"
-$outputPath = "C:\temp\TeamsUserActivityReport.csv"
-
-# Run the script
-.\Teams\Export-TeamsUserActivityReport.ps1 -StartDate $startDate `
-    -EndDate $endDate `
-    -OutputPath $outputPath
-```
-
-### [Get-TeamChannelMessages.ps1](Teams/Get-TeamChannelMessages.ps1)
-
-Retrieves messages from a specific channel in a Microsoft Team.
-
-#### Get-TeamChannelMessages.ps1 Example
-
-```PowerShell
-# Set your parameters
-$teamId = "<your team id>"
-$channelId = "<your channel id>"
-
-# Run the script
-.\Teams\Get-TeamChannelMessages.ps1
-```
-
-### [Get-TeamChannels.ps1](Teams/Get-TeamChannels.ps1)
-
-Retrieves all channels within a specified Microsoft Team.
-
-#### Get-TeamChannels.ps1 Example
-
-```PowerShell
-# Set your parameters
-$teamId = "<your team id>"
-
-# Run the script
-.\Teams\Get-TeamChannels.ps1
 ```
