@@ -28,20 +28,19 @@ Starts Azure Virtual Machines across resource groups.
 
 ## Compliance
 
-### [AuditLogSearches.ps1](Compliance/AuditLogSearches.ps1)
+### [Get-AuditLogResults.ps1](Compliance/Get-AuditLogResults.ps1)
 
-Searches the unified audit log for specified date ranges.
+Searches the unified audit log and retrieves results for specified date ranges.
 
-#### AuditLogSearches.ps1 Example
+#### Get-AuditLogResults.ps1 Example
 
 ```PowerShell
 # Set your parameters
 $startDate = "2025-06-01"
 $endDate = "2025-06-24"
-$excludeBotIconUpdates = $true
 
 # Run the script
-.\Compliance\AuditLogSearches.ps1
+.\Compliance\Get-AuditLogResults.ps1
 ```
 
 ### [ContentSearch.ps1](Compliance/ContentSearch.ps1)
@@ -64,7 +63,6 @@ $kql="Subject:`"`" AND sent>=$startDate AND sent<=$endDate"
 ```
 
 ## Copilot
-
 
 ### [Get-ConversationTranscriptsViaAPI.ps1](Power-Platform/Get-ConversationTranscriptsViaAPI.ps1)
 
@@ -236,6 +234,17 @@ $appId = "your-app-registration-id"
 .\Power-Platform\Add-AppUserviaCLI.ps1
 ```
 
+### [ConvertFrom-TranscriptData.ps1](Power-Platform/ConvertFrom-TranscriptData.ps1)
+
+Converts and processes transcript data from Power Platform conversation transcripts.
+
+#### ConvertFrom-TranscriptData.ps1 Example
+
+```PowerShell
+# Run the script to convert transcript data
+.\Power-Platform\ConvertFrom-TranscriptData -TranscriptsData $transcriptsData -OutputPath "C:\temp\parsed-transcripts.txt"
+```
+
 ### [Get-AllDataPolicyConnectorInfo.ps1](Power-Platform/Get-AllDataPolicyConnectorInfo.ps1)
 
 Retrieves information about all data policy connectors in the Power Platform tenant.
@@ -278,7 +287,7 @@ Retrieves Copilot agents information via Power Platform APIs.
 # Run the script
 
 Get-CopilotAgentsViaAPI -ClientId "<your client id>" `
-    -ClientSecret "<client secret>" `
+    -ClientSecret "<your client secret>" `
     -OrgUrl "<your org>.crm.dynamics.com" `
     -TenantDomain "<your domain>.onmicrosoft.com" `
     -FieldList "botid,componentidunique,applicationmanifestinformation,name,configuration,createdon,publishedon,_ownerid_value,_createdby_value,solutionid,modifiedon,_owninguser_value,schemaname,_modifiedby_value,_publishedby_value,authenticationmode,synchronizationstatus,ismanaged" `
@@ -292,20 +301,10 @@ Gets Copilots and their components from all Power Platform environments.
 #### Get-CopilotsAndComponentsFromAllEnvironments.ps1 Example
 
 ```PowerShell
-Get-CopoilotsAndCompnonentsFromAllEnvironments.ps1 -ClientId "<client id>" `
-    -ClientSecret "<client secret>" `
+Get-CopoilotsAndCompnonentsFromAllEnvironments.ps1 -ClientId "<your client id>" `
+    -ClientSecret "<your client secret>" `
     -TenantDomain "<your domain>.onmicrosoft.com" | 
     Out-File "C:\temp\copilotsAndComponents.txt"
-```
-
-### [Get-EnvironmentInfo.ps1](Power-Platform/Get-EnvironmentInfo.ps1)
-
-Retrieves detailed information about Power Platform environments.
-
-#### Get-EnvironmentInfo.ps1 Example
-
-```PowerShell
-Get-PowerPlatformEnvironmentInfo | Export-Csv -Path "c:\temp\PowerPlatformEnvironmentInfo.csv" -NoTypeInformation -Force
 ```
 
 ### [Get-PowerAppsAndConnections.ps1](Power-Platform/Get-PowerAppsAndConnections.ps1)
@@ -317,6 +316,16 @@ Gets Power Apps and their connections across all environments.
 ```PowerShell
 # Set output parameters
 Get-PowerPlatformAppsAndConnections | Export-Csv -Path "c:\temp\PowerPlatformAppsAndConnections.csv"
+```
+
+### [Get-PowerPlatformEnvironmentInfo.ps1](Power-Platform/Get-PowerPlatformEnvironmentInfo.ps1)
+
+Retrieves detailed information about Power Platform environments.
+
+#### Get-PowerPlatformEnvironmentInfo.ps1 Example
+
+```PowerShell
+Get-PowerPlatformEnvironmentInfo | Export-Csv -Path "c:\temp\PowerPlatformEnvironmentInfo.csv" -NoTypeInformation -Force
 ```
 
 ### [Get-PowerPlatformUsageReports.ps1](Power-Platform/Get-PowerPlatformUsageReports.ps1)
@@ -358,6 +367,28 @@ Retrieves information about Power Platform Environments.
     $tenantDomain="<your tenant>.onmicrosoft.com>"
 
     .\Power-Platform\Get-PowerPlatTenantSettingsViaAPI.ps1
+```
+
+### [Get-UsersViaAPI.ps1](Power-Platform/Get-UsersViaAPI.ps1)
+
+Retrieves user information via Power Platform APIs.
+
+#### Get-UsersViaAPI.ps1 Example
+
+```PowerShell
+# Set your environment parameters
+$clientId = "<your client id>"
+$clientSecret = "<your client secret>"
+$orgUrl = "<your org>.crm.dynamics.com"
+$tenantDomain = "<your tenant domain>.onmicrosoft.com"
+
+# Run the script
+Get-UsersViaAPI -ClientId $clientId `
+    -ClientSecret $clientSecret `
+    -OrgUrl $orgUrl `
+    -TenantDomain $tenantDomain `
+    -FieldList "systemuserid,fullname,internalemailaddress,domainname,isdisabled,accessmode,createdon" `
+    | Export-Csv -Path "C:\temp\users.csv" -NoTypeInformation
 ```
 
 ## SharePoint
@@ -432,6 +463,17 @@ $spoAdminUrl="https://<your tenant>-admin.sharepoint.com"
 
 .\SharePoint-Online\Get-CopilotAgentReport.ps1
 
+```
+
+### [Get-GraphDeltaQueryResults.ps1](SharePoint-Online/Get-GraphDeltaQueryResults.ps1)
+
+Retrieves Microsoft Graph delta query results for tracking changes in SharePoint Online.
+
+#### Get-GraphDeltaQueryResults.ps1 Example
+
+```PowerShell
+# Run the script to get delta query results
+.\SharePoint-Online\Get-GraphDeltaQueryResults.ps1
 ```
 
 ### [Get-SharePointAgentCreationAuditLogItems.ps1](SharePoint-Online/Get-SharePointAgentCreationAuditLogItems.ps1)

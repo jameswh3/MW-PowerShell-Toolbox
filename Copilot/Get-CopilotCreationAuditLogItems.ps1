@@ -1,7 +1,7 @@
 #Requires -Modules ExchangeOnlineManagement
 
 if ([string]::IsNullOrEmpty($startDate)) {
-    $startDate = (get-date).AddDays(-7).tostring("yyyy-MM-dd")
+    $startDate = (get-date).AddDays(-14).tostring("yyyy-MM-dd")
 }
 if ([string]::IsNullOrEmpty($endDate)) {
     $endDate = (get-date).tostring("yyyy-MM-dd")

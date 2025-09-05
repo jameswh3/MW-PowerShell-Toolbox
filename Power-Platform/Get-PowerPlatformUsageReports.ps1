@@ -7,8 +7,8 @@ function Get-PowerPlatformUsageReports {
             [string]$TenantDomain,
         [Parameter(Mandatory = $true)]
             [string]$TenantId,
-        [datetime]$StartDate = (Get-Date).AddDays(-8),
-        [datetime]$EndDate = (Get-Date).AddDays(-1),
+        [datetime]$StartDate = (Get-Date).AddDays(-30),
+        [datetime]$EndDate = (Get-Date).AddDays(0),
         [string]$OutputLocation = "C:\temp",
         [string[]]$ReportTypes = @("AIByUserAndEnvironment", "ApiByLicensedUser", "ApiByNonLicensedUser", "ApiByFlow", "PowerPagesAnonymous", "PowerPagesAuthenticated", "CopilotStudioDetailedUsage"),
         [int]$SleepTime = 600 #seconds to wait for report generation before downloading it

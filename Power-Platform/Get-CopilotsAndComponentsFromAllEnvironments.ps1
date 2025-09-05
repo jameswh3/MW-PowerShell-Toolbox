@@ -1,9 +1,7 @@
 #Requires -Modules Microsoft.PowerApps.Administration.PowerShell
 #Requires -Modules Microsoft.PowerApps.PowerShell
-#Requires -Modules Microsoft.PowerApps.Cds.Client
-#Requires -Modules Microsoft.Xrm.Data.PowerShell
 
-function Get-CopoilotsAndCompnonentsFromAllEnvironments.ps1 {
+function Get-CopilotsAndComponentsFromAllEnvironments {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$false, Position=0, HelpMessage="Enter the Azure AD application client ID")]
@@ -16,24 +14,26 @@ function Get-CopoilotsAndCompnonentsFromAllEnvironments.ps1 {
         [string]$TenantDomain
     )
     BEGIN {
-        $environmentData=Get-PowerPlatformEnvironmentInfo
+        $environmentData=Get-AdminPowerAppEnvironment | Where-Object -Property "CommonDataServiceDatabaseType" -eq "Common Data Service for Apps"
     }
     PROCESS {
         foreach ($e in $environmentData) {
-            $orgUrl=$e.EnvironmentUrl
+            $orgUrl=$e.Internal.Properties.linkedEnvironmentMetadata.instanceApiUrl
             
             #get list of agents/copilots/bots
+            write-host "Getting bots and components for environment: $($e.DisplayName) - $($e.EnvironmentName) - $orgUrl"
             $bots=Get-CopilotAgentsViaAPI -ClientId $clientId `
                 -ClientSecret $clientSecret `
                 -OrgUrl $orgUrl `
-                -TenantDomain $tenantDomain `
+                -TenantDomain $TenantDomain `
                 -FieldList "botid,componentidunique,name,configuration,createdon,publishedon,_ownerid_value,_createdby_value,solutionid,modifiedon,_owninguser_value,schemaname,_modifiedby_value,_publishedby_value,authenticationmode,synchronizationstatus,ismanaged"
             
             #get list of bot components
+            write-host "Getting bot components for environment: $($e.DisplayName) - $($e.EnvironmentName) - $($e.EnvironmentUrl)"
             $components=Get-BotComponentsViaAPI -ClientId $clientId `
                 -ClientSecret $clientSecret `
                 -OrgUrl $orgUrl `
-                -TenantDomain $tenantDomain `
+                -TenantDomain $TenantDomain `
                 -FieldList "botcomponentid,componenttype,data,description,filedata,filedata_name,name,schemaname,createdon,_createdby_value,modifiedon,_modifiedby_value,_parentbotid_value"
         }
     }
