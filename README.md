@@ -15,6 +15,41 @@ Retrieves all Azure App Registrations and displays their names and App IDs.
 .\Azure\Get-AzureAppRegistrations.ps1
 ```
 
+### [Get-AzureBlobFiles.ps1](Azure/Get-AzureBlobFiles.ps1)
+
+Retrieves information about files stored in Azure Blob Storage containers.
+
+#### Get-AzureBlobFiles.ps1 Example
+
+```PowerShell
+# Set your Azure storage parameters
+$storageAccountName = "yourstorageaccount"
+$containerName = "yourcontainer"
+
+# Run the script
+.\Azure\Get-AzureBlobFiles.ps1
+```
+
+### [Set-FabricCapacityState.ps1](Azure/Set-FabricCapacityState.ps1)
+
+Manages the state (start/stop) of Microsoft Fabric capacities in Azure.
+
+#### Set-FabricCapacityState.ps1 Example
+
+```PowerShell
+# Set your Fabric capacity parameters
+$subscriptionId = "your-subscription-id"
+$resourceGroupName = "your-resource-group"
+$capacityName = "your-fabric-capacity"
+$state = "Active" # or "Paused"
+
+# Run the script
+.\Azure\Set-FabricCapacityState.ps1
+Set-FabricCapacityState -ResourceGroupName $resourceGroupName `
+        -FabricName $fabricName `
+        -State "Active"
+```
+
 ### [Start-AzureVMs.ps1](Azure/Start-AzureVMs.ps1)
 
 Starts Azure Virtual Machines across resource groups.
@@ -24,24 +59,13 @@ Starts Azure Virtual Machines across resource groups.
 ```PowerShell
 # Run the script
 .\Azure\Start-AzureVMs.ps1
+
+Start-AzureVMs -ResourceGroupName "<your resource group>" `
+    -SubscriptionId "<your subscription id>"
+
 ```
 
 ## Compliance
-
-### [Get-AuditLogResults.ps1](Compliance/Get-AuditLogResults.ps1)
-
-Searches the unified audit log and retrieves results for specified date ranges.
-
-#### Get-AuditLogResults.ps1 Example
-
-```PowerShell
-# Set your parameters
-$startDate = "2025-06-01"
-$endDate = "2025-06-24"
-
-# Run the script
-.\Compliance\Get-AuditLogResults.ps1
-```
 
 ### [ContentSearch.ps1](Compliance/ContentSearch.ps1)
 
@@ -62,33 +86,36 @@ $kql="Subject:`"`" AND sent>=$startDate AND sent<=$endDate"
 .\Compliance\ContentSearch.ps1
 ```
 
-## Copilot
+### [Get-AllRetentionPoliciesAndRules.ps1](Compliance/Get-AllRetentionPoliciesAndRules.ps1)
 
-### [Get-ConversationTranscriptsViaAPI.ps1](Power-Platform/Get-ConversationTranscriptsViaAPI.ps1)
+Retrieves all retention policies and their associated rules from Microsoft 365 Compliance Center.
 
-Retrieves conversation transcripts from Power Platform bots via API within a specified date range.
-
-#### Get-ConversationTranscriptsViaAPI.ps1 Example
+#### Get-AllRetentionPoliciesAndRules.ps1 Example
 
 ```PowerShell
-# Set your environment parameters
-$clientId = "<your client id>"
-$clientSecret = "<your client secret>"
-$orgUrl = "<your org>.crm.dynamics.com"
-$tenantDomain = "<your tenant domain>.onmicrosoft.com"
-$startDate = "2025-06-01"
-$endDate = "2025-06-30"
+# Set your parameters
+$upn = "admin@yourdomain.com"
 
 # Run the script
-Get-ConversationTranscriptsViaAPI -ClientId $clientId `
-    -ClientSecret $clientSecret `
-    -OrgUrl $orgUrl `
-    -TenantDomain $tenantDomain `
-    -StartDate $startDate `
-    -EndDate $endDate `
-    -FieldList "content,createdon,conversationtranscriptid,_bot_conversationtranscriptid_value,metadata" `
-    | Export-Csv -Path "C:\temp\conversation-transcripts.csv" -NoTypeInformation
+.\Compliance\Get-AllRetentionPoliciesAndRules.ps1
 ```
+
+### [Get-AuditLogResults.ps1](Compliance/Get-AuditLogResults.ps1)
+
+Searches the unified audit log and retrieves results for specified date ranges.
+
+#### Get-AuditLogResults.ps1 Example
+
+```PowerShell
+# Set your parameters
+$startDate = "2025-06-01"
+$endDate = "2025-06-24"
+
+# Run the script
+.\Compliance\Get-AuditLogResults.ps1
+```
+
+## Copilot
 
 ### [Get-CopilotCreationAuditLogItems.ps1](Copilot/Get-CopilotCreationAuditLogItems.ps1)
 
@@ -184,21 +211,6 @@ ConvertTo-SharePointDriveId -siteId "<site GUID>" `
 
 ## MsGraph
 
-### [M365Reporting.ps1](MsGraph/M365Reporting.ps1)
-
-Generates comprehensive Microsoft 365 usage and activity reports using Microsoft Graph.
-
-#### M365Reporting.ps1 Example
-
-```PowerShell
-# Set your reporting parameters
-$tenantId = "your-tenant-id"
-$clientId = "your-app-registration-id"
-
-# Run the script
-.\MsGraph\M365Reporting.ps1
-```
-
 ### [Get-OnlineMeetingRecordings.ps1](MsGraph/Get-OnlineMeetingRecordings.ps1)
 
 Retrieves online meeting recordings for a specific user within a date range using Microsoft Graph.
@@ -214,6 +226,21 @@ $meetingOrganizerUserId = "user@yourdomain.com"
 
 # Run the script
 .\MsGraph\Get-OnlineMeetingRecordings.ps1
+```
+
+### [M365Reporting.ps1](MsGraph/M365Reporting.ps1)
+
+Generates comprehensive Microsoft 365 usage and activity reports using Microsoft Graph.
+
+#### M365Reporting.ps1 Example
+
+```PowerShell
+# Set your reporting parameters
+$tenantId = "your-tenant-id"
+$clientId = "your-app-registration-id"
+
+# Run the script
+.\MsGraph\M365Reporting.ps1
 ```
 
 ## Power-Platform
@@ -275,6 +302,32 @@ Get-BotComponentsViaAPI -ClientId $clientId `
     -OrgUrl $orgUrl `
     -TenantDomain $tenantDomain `
     -FieldList $fieldList
+```
+
+### [Get-ConversationTranscriptsViaAPI.ps1](Power-Platform/Get-ConversationTranscriptsViaAPI.ps1)
+
+Retrieves conversation transcripts from Power Platform bots via API within a specified date range.
+
+#### Get-ConversationTranscriptsViaAPI.ps1 Example
+
+```PowerShell
+# Set your environment parameters
+$clientId = "<your client id>"
+$clientSecret = "<your client secret>"
+$orgUrl = "<your org>.crm.dynamics.com"
+$tenantDomain = "<your tenant domain>.onmicrosoft.com"
+$startDate = "2025-06-01"
+$endDate = "2025-06-30"
+
+# Run the script
+Get-ConversationTranscriptsViaAPI -ClientId $clientId `
+    -ClientSecret $clientSecret `
+    -OrgUrl $orgUrl `
+    -TenantDomain $tenantDomain `
+    -StartDate $startDate `
+    -EndDate $endDate `
+    -FieldList "content,createdon,conversationtranscriptid,_bot_conversationtranscriptid_value,metadata" `
+    | Export-Csv -Path "C:\temp\conversation-transcripts.csv" -NoTypeInformation
 ```
 
 ### [Get-CopilotAgentsViaAPI.ps1](Power-Platform/Get-CopilotAgentsViaAPI.ps1)
@@ -508,19 +561,15 @@ $endDate = "2025-06-24"
 .\SharePoint-Online\Get-SharePointAgentInteractionAuditLogItems.ps1
 ```
 
-### [New-HubSites.ps1](SharePoint-Online/New-HubSites.ps1)
+### [New-DemoProjectHubSites.ps1](SharePoint-Online/New-DemoProjectHubSites.ps1)
 
-Creates SharePoint Online Hub Sites using PnP.PowerShell, with optional parent hub site association.
+Creates a complete demo environment with hub sites, regional sites, and project sites with proper associations.
 
-#### New-HubSites.ps1 Example
+#### New-DemoProjectHubSites.ps1 Example
 
 ```PowerShell
-# Create hub sites
-$siteUrls = @("https://contoso.sharepoint.com/sites/Hub1", "https://contoso.sharepoint.com/sites/Hub2")
-$parentHubSiteId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-
-# Run the script
-.\SharePoint-Online\New-HubSites.ps1 -SiteUrls $siteUrls -ParentHubSiteId $parentHubSiteId
+# Run the script to create demo project hub structure
+.\SharePoint-Online\New-DemoProjectHubSites.ps1
 ```
 
 ### [New-DemoProjectPlanDocs.ps1](SharePoint-Online/New-DemoProjectPlanDocs.ps1)
@@ -535,15 +584,19 @@ Creates demo project plan documents with random team assignments and tasks.
 .\SharePoint-Online\New-DemoProjectPlanDocs.ps1
 ```
 
-### [New-DemoProjectHubSites.ps1](SharePoint-Online/New-DemoProjectHubSites.ps1)
+### [New-HubSites.ps1](SharePoint-Online/New-HubSites.ps1)
 
-Creates a complete demo environment with hub sites, regional sites, and project sites with proper associations.
+Creates SharePoint Online Hub Sites using PnP.PowerShell, with optional parent hub site association.
 
-#### New-DemoProjectHubSites.ps1 Example
+#### New-HubSites.ps1 Example
 
 ```PowerShell
-# Run the script to create demo project hub structure
-.\SharePoint-Online\New-DemoProjectHubSites.ps1
+# Create hub sites
+$siteUrls = @("https://contoso.sharepoint.com/sites/Hub1", "https://contoso.sharepoint.com/sites/Hub2")
+$parentHubSiteId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Run the script
+.\SharePoint-Online\New-HubSites.ps1 -SiteUrls $siteUrls -ParentHubSiteId $parentHubSiteId
 ```
 
 ### [New-OneDriveSites.ps1](SharePoint-Online/New-OneDriveSites.ps1)
@@ -602,6 +655,17 @@ $documents = @(
 ```
 
 ## Teams
+
+### [Get-AllTeamsMeetingPolicies.ps1](Teams/Get-AllTeamsMeetingPolicies.ps1)
+
+Retrieves all Teams meeting policies and their configuration settings.
+
+#### Get-AllTeamsMeetingPolicies.ps1 Example
+
+```PowerShell
+# Run the script to get all Teams meeting policies
+.\Teams\Get-AllTeamsMeetingPolicies.ps1
+```
 
 ### [Get-AllTeamsViaGraph.ps1](Teams/Get-AllTeamsViaGraph.ps1)
 

@@ -22,7 +22,6 @@ function Get-ComplianceSearchActionStatus {
     return $searchActionStatus.Status
 }
 
-
 #Connect to Compliance Session
 Connect-IPPSSession -UserPrincipalName $upn
 

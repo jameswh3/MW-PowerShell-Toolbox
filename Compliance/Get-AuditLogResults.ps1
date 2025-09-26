@@ -2,24 +2,25 @@
 
 
 if (-not $startDate) {
-      $startDate = (get-date).AddDays(-14).tostring("yyyy-MM-dd")
+      $startDate = (get-date).AddDays(-1).tostring("yyyy-MM-dd")
 }
 if (-not $endDate) {
-      $endDate = (get-date).tostring("yyyy-MM-dd")
+      $endDate = (get-date).AddDays(1).tostring("yyyy-MM-dd")
 }
 
-if (-not $upn) {
-      $upn = Read-Host "Enter your UPN"
-}
+
 $excludeBotIconUpdates=$true #the bot icon updates include base64 representations of the icon, which are large and not useful for most purposes.  If you want to include them, set this to $false.
 
 #Exchange Online Management Session; $set upn variable prior to running
 if (-not (Get-ConnectionInformation)) {
+      if (-not $upn) {
+            $upn = Read-Host "Enter your UPN"
+      }
       Connect-ExchangeOnline -UserPrincipalName $upn
 }
 
 #region - Get All Record Types for the Date Range
-$sessionId = "All RecordTypes from $startDate to $endDate"
+$sessionId = "All RecordTypes from $startDate to $endDate & $(Get-Random -Minimum 1 -Maximum 100)"
 $allResults=@()
 do {
       $currentResult=Search-UnifiedAuditLog `
