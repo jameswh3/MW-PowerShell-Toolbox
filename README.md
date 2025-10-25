@@ -30,6 +30,18 @@ $containerName = "yourcontainer"
 .\Azure\Get-AzureBlobFiles.ps1
 ```
 
+### [Set-AzureSQLServerAccess.ps1](Azure/Set-AzureSQLServerAccess.ps1)
+
+Configures Azure SQL Server access settings and firewall rules.
+
+#### Set-AzureSQLServerAccess.ps1 Example
+
+```PowerShell
+# Configure SQL Server access
+Set-AzureSQLServerAccess -ServerName "yoursqlserver" `
+    -ResourceGroupName "your-resource-group"
+```
+
 ### [Set-FabricCapacityState.ps1](Azure/Set-FabricCapacityState.ps1)
 
 Manages the state (start/stop) of Microsoft Fabric capacities in Azure.
@@ -63,6 +75,18 @@ Starts Azure Virtual Machines across resource groups.
 Start-AzureVMs -ResourceGroupName "<your resource group>" `
     -SubscriptionId "<your subscription id>"
 
+```
+
+### [Stop-AzureVMs.ps1](Azure/Stop-AzureVMs.ps1)
+
+Stops Azure Virtual Machines across resource groups.
+
+#### Stop-AzureVMs.ps1 Example
+
+```PowerShell
+# Stop VMs in a resource group
+Stop-AzureVMs -ResourceGroupName "<your resource group>" `
+    -SubscriptionId "<your subscription id>"
 ```
 
 ## Compliance
@@ -147,6 +171,25 @@ Retrieves audit log entries for Copilot interaction events.
     -UserPrincipalName 'admin@yourdomain.com' `
     -OutputFile 'c:\temp\copilotinteractionauditlog.csv' `
     -Append
+```
+
+### [Get-CopilotSharingAuditLogItems.ps1](Copilot/Get-CopilotSharingAuditLogItems.ps1)
+
+Retrieves audit log entries for Copilot sharing events and activities.
+
+#### Get-CopilotSharingAuditLogItems.ps1 Example
+
+```PowerShell
+# Set your parameters
+$upn = "admin@yourdomain.com"
+$startDate = "2025-06-01"
+$endDate = "2025-06-24"
+
+# Run the script
+.\Copilot\Get-CopilotSharingAuditLogItems.ps1 -StartDate $startDate `
+    -EndDate $endDate `
+    -UserPrincipalName $upn `
+    -OutputFile 'c:\temp\copilotsharingauditlog.csv'
 ```
 
 ## Entra
@@ -316,8 +359,8 @@ $clientId = "<your client id>"
 $clientSecret = "<your client secret>"
 $orgUrl = "<your org>.crm.dynamics.com"
 $tenantDomain = "<your tenant domain>.onmicrosoft.com"
-$startDate = "2025-06-01"
-$endDate = "2025-06-30"
+$endDate = (Get-Date).ToString("yyyy-MM-dd")
+$startDate = (Get-Date).AddDays(-30).ToString("yyyy-MM-dd")
 
 # Run the script
 Get-ConversationTranscriptsViaAPI -ClientId $clientId `
@@ -388,7 +431,7 @@ Generates usage reports for Power Platform services and applications.
 #### Get-PowerPlatformUsageReports.ps1 Example
 
 ```PowerShell
-$tenantDomain=",yourdomain.onmicrosoft.com"
+$tenantDomain="yourdomain.onmicrosoft.com"
 $startDate = "2025-06-01"
 $endDate = "2025-06-23"
 $tenantId="<your tenant id>"

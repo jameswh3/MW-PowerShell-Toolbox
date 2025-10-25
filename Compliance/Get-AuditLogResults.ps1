@@ -2,7 +2,7 @@
 
 
 if (-not $startDate) {
-      $startDate = (get-date).AddDays(-1).tostring("yyyy-MM-dd")
+      $startDate = (get-date).AddDays(-5).tostring("yyyy-MM-dd")
 }
 if (-not $endDate) {
       $endDate = (get-date).AddDays(1).tostring("yyyy-MM-dd")

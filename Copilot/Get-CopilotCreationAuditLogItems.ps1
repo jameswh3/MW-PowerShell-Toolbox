@@ -10,8 +10,13 @@ if ([string]::IsNullOrEmpty($upn)) {
     $upn = Read-Host "Enter your UPN"
 }
 
-#Exchange Online Management Session; $set upn variable prior to running
-Connect-ExchangeOnline -UserPrincipalName $upn
+# Check for existing Exchange Online connection
+$existingConnection = Get-ConnectionInformation -ErrorAction SilentlyContinue
+if ($existingConnection) {
+    Write-Host "Using existing Exchange Online connection for $($existingConnection.UserPrincipalName)"
+} else {
+    Connect-ExchangeOnline -UserPrincipalName $upn
+}
 
 #region - Get CopilotInteraction Events for the Date Range
 $recordType="BotCreate"

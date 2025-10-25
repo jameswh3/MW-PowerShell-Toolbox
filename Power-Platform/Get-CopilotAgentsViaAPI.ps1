@@ -18,15 +18,18 @@ function Get-CopilotAgentsViaAPI {
         [string[]]$FieldList="botid,applicationmanifestinformation,componentidunique,name,configuration,createdon,publishedon,_ownerid_value,_createdby_value,solutionid,modifiedon,_owninguser_value,schemaname,_modifiedby_value,_publishedby_value,authenticationmode,synchronizationstatus,ismanaged"
     )
     BEGIN {
+                if ($OrgUrl.StartsWith("https://")) {
+            $OrgUrl = $OrgUrl.Substring(8)
+        }
         $tokenUrl = "https://login.microsoftonline.com/$TenantDomain/oauth2/v2.0/token"
         $token = Invoke-RestMethod -Uri $tokenUrl `
             -Method Post `
-            -Body @{grant_type="client_credentials"; client_id="$ClientId"; client_secret="$ClientSecret"; scope="$OrgUrl/.default"} `
+            -Body @{grant_type="client_credentials"; client_id="$ClientId"; client_secret="$ClientSecret"; scope="https://$OrgUrl/.default"} `
             -ContentType 'application/x-www-form-urlencoded'
     }
     PROCESS {
             #get list of agents/copilots/bots
-        $response=Invoke-RestMethod -Uri "$OrgUrl/api/data/v9.2/bots?`$select=$FieldList" `
+        $response=Invoke-RestMethod -Uri "https://$OrgUrl/api/data/v9.2/bots?`$select=$FieldList" `
             -Headers @{Authorization = "Bearer $($token.access_token)"}
     }
     END {
