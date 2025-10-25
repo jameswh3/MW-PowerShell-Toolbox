@@ -216,9 +216,11 @@ do {
                 -StartDate (Get-Date).AddDays(-14) `
                 -EndDate (Get-Date)
             $transcriptData | out-file "$outputDirectory\conversationtranscripts.txt"
-            . "$workingDirectory\Power-Platform\ConvertFrom-TranscriptData.ps1"
-            $transcriptData | out-file "$outputDirectory\conversationtranscripts.txt"
-            $transcriptData | ConvertFrom-TranscriptData -OutputPath "$outputDirectory\parsedconversationtranscripts.txt"
+            Write-Host "Transcript data exported to $outputDirectory\conversationtranscripts.txt" -ForegroundColor Green
+            Write-Host "Parsing transcript data into human-readable format..." -ForegroundColor Green
+            . "$workingDirectory\Power-Platform\ConvertFrom-AgentTranscript.ps1" -InputFile "$outputDirectory\conversationtranscripts.txt" `
+                -OutputFile "$outputDirectory\parsedconversationtranscripts.txt"
+            Write-Host "Parsed transcript data saved to $outputDirectory\parsedconversationtranscripts.txt" -ForegroundColor Green
         }
         "Get Power Platform Users Via API" {
             . "$workingDirectory\Power-Platform\Get-UsersViaAPI.ps1"
