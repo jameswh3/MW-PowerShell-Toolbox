@@ -70,8 +70,8 @@ $workingDirectory = $workingDirectory.TrimEnd('\')
 # Define menu items with categories
 $menuCategories = [ordered]@{
     "Compliance" = @(
-        "Download Copilot Audit Logs from CDX Tenant (14 days)",
-        "Download Full Audit Logs from CDX Tenant (14 days)"
+        "Download Copilot Audit Logs from M365 Tenant (14 days)",
+        "Download Full Audit Logs from M365 Tenant (14 days)"
     )
     "Compute" = @(
         "Start Azure VMs"
@@ -137,7 +137,7 @@ do {
 
     # Switch statement for menu actions
     switch ($selectedItem) {
-        "Download Copilot Audit Logs from CDX Tenant (14 days)" { 
+        "Download Copilot Audit Logs from M365 Tenant (14 days)" { 
             write-host "Running $selectedItem..." -ForegroundColor Green
             . "$workingDirectory\Copilot\Get-CopilotInteractionAuditLogItems.ps1"
             if (-not ($upn)) {
@@ -150,7 +150,7 @@ do {
                     -OutputFile "$outputDirectory\copilotauditlog.csv" `
                     -Append
         }
-        "Download Full Audit Logs from CDX Tenant (14 days)"{
+        "Download Full Audit Logs from M365 Tenant (14 days)"{
             write-host "Running $selectedItem..." -ForegroundColor Green
             . "$workingDirectory\Copilot\Get-AuditLogResults.ps1"
             if (-not ($upn)) {
