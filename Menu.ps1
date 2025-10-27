@@ -183,7 +183,7 @@ do {
                 -ResourceGroupName $SQLResourceGroupName 
         }
         "Start Azure Fabric Capacity" { 
-            # Configure Azure Fabric Capacity
+            # Start Azure Fabric Capacity
             write-host "Running $selectedItem..." -ForegroundColor Green
             . "$workingDirectory\azure\Set-FabricCapacityState.ps1"
                 Set-FabricCapacityState -ResourceGroupName $FabricResourceGroupName `
@@ -191,7 +191,7 @@ do {
                     -State "Active"
         }
         "Stop Azure Fabric Capacity" { 
-            # Configure Azure Fabric Capacity
+            # Pause Azure Fabric Capacity
             write-host "Running $selectedItem..." -ForegroundColor Green
             . "$workingDirectory\azure\Set-FabricCapacityState.ps1"
                 Set-FabricCapacityState -ResourceGroupName $FabricResourceGroupName `
@@ -199,7 +199,6 @@ do {
                     -State "Paused"
         }
         "Start Azure VMs" { 
-            # Second Menu Item code here
             write-host "Running $selectedItem..." -ForegroundColor Green
             . "$workingDirectory\azure\Start-AzureVMs.ps1"
             Start-AzureVMs -SubscriptionId $AzureSubscriptionId `
@@ -208,7 +207,6 @@ do {
         "Get Conversation Transcripts Via API" {
             . "$workingDirectory\Power-Platform\Get-ConversationTranscriptsViaAPI.ps1"
             write-host "Running $selectedItem..." -ForegroundColor Green
-
             $transcriptData =Get-ConversationTranscriptsViaAPI -ClientId $PowerPlatClientId `
                 -ClientSecret $PowerPlatClientSecret `
                 -OrgUrl $PowerPlatOrgUrl `
@@ -224,7 +222,6 @@ do {
         }
         "Get Power Platform Users Via API" {
             . "$workingDirectory\Power-Platform\Get-UsersViaAPI.ps1"
-
             $PowerPlatUsers = Get-UsersViaAPI -ClientId $clientId `
                 -ClientSecret $clientSecret `
                 -OrgUrl $orgUrl `
@@ -241,7 +238,6 @@ do {
             | out-file "c:\temp\botcomponents.txt"
         }
         "Get Copilot Consumption Report" {
-
             # This is from Joe Rodger and needs to be downloaded separately
             $reportScriptPath = "$workingDirectory\Power-Platform\Get-AgentMessageConsumptionReport.ps1"
             if (-not (Test-Path $reportScriptPath)) {
@@ -252,7 +248,7 @@ do {
                 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
                 continue
             }
-            . $
+            . "$workingDirectory\Power-Platform\Get-AgentMessageConsumptionReport.ps1"
             write-host "Running $selectedItem..." -ForegroundColor Green
             # export usage to csv
             $consumption | Export-Csv `
