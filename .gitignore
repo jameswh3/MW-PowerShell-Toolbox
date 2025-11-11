@@ -1,5 +1,4 @@
 Testing.ps1
-Azure/Set-AzureBlobStorageAccess.ps1
 Power-Platform/Get-AgentMessageConsumptionReport.ps1
 .env
 .vscode/settings.json

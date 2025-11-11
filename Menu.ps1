@@ -1,6 +1,6 @@
 # Configuration Variables used by multiple scripts
 $workingDirectory = (Get-Location).Path
-$startDate = (Get-Date).AddDays(-14).ToString("yyyy-MM-dd")
+$startDate = (Get-Date).AddDays(-90).ToString("yyyy-MM-dd")
 $endDate = (Get-Date).AddDays(1).ToString("yyyy-MM-dd")
 $outputDirectory = "c:\temp"
 

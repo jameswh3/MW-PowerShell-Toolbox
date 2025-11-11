@@ -1,6 +1,70 @@
 # MW-PowerShell-Toolbox
 
-A collection of scripts that I use as part of my role as a Microsoft Modern Work Technical Specialist.
+A collection of scripts that I use as part of my role as a Copilot Solution Engineer.
+
+## Environment Configuration
+
+### Setting Up Your .env File
+
+Many scripts in this toolbox use environment variables for configuration. These variables can be set using a `.env` file in the root directory of the repository.
+
+#### Creating Your .env File
+
+1. Copy the `.env-example` file to create your own `.env` file:
+
+   ```powershell
+   Copy-Item .env-example .env
+   ```
+
+2. Edit the `.env` file and replace the placeholder values with your actual configuration:
+
+   ```plaintext
+   # Multiple Scripts
+   TENANT_ID=your-tenant-id-guid
+
+   # Compliance scripts
+   UPN=admin@yourtenant.onmicrosoft.com
+
+   # Blob storage scripts
+   STORAGE_ACCOUNT_NAME=yourstorageaccount
+   RESOURCE_GROUP_NAME=your-resource-group
+   CONTAINER_NAME=yourcontainer
+
+   # And so on...
+   ```
+
+3. The `Menu.ps1` script will automatically load these variables when executed.
+
+#### Available Environment Variables
+
+The `.env-example` file includes configuration for:
+
+- **Multiple Scripts**: `TENANT_ID`
+- **Compliance Scripts**: `UPN`
+- **Blob Storage Scripts**: `STORAGE_ACCOUNT_NAME`, `RESOURCE_GROUP_NAME`, `CONTAINER_NAME`
+- **Database Scripts**: `SQL_SERVER_NAME`, `SQL_RESOURCE_GROUP_NAME`
+- **Fabric Scripts**: `FABRIC_RESOURCE_GROUP_NAME`, `FABRIC_NAME`
+- **Power Platform Scripts**: `POWER_PLAT_CLIENT_ID`, `POWER_PLAT_CLIENT_SECRET`, `POWER_PLAT_TENANT_DOMAIN`, `POWER_PLAT_ORG_URL`
+- **Azure VM Scripts**: `AZURE_SUBSCRIPTION_ID`, `AZURE_VM_RESOURCE_GROUP_NAME`
+- **SharePoint Online Scripts**: `SHAREPOINT_ONLINE_CLIENT_ID`, `SHAREPOINT_ONLINE_CERTIFICATE_PATH`, `SHAREPOINT_ONLINE_SITE_ID`, `SHAREPOINT_ONLINE_DRIVE_ID`, `SHAREPOINT_ONLINE_FOLDER_PATH`
+
+> **Note**: The `.env` file is included in `.gitignore` to prevent accidentally committing sensitive credentials to version control.
+
+## Root Scripts
+
+### [Menu.ps1](Menu.ps1)
+
+Central configuration file that sets up environment variables and common configuration used by multiple scripts. Includes functionality to load settings from a .env file.
+
+#### Menu.ps1 Example
+
+```PowerShell
+# Load the configuration file
+. .\Menu.ps1
+
+# Environment variables will be loaded from .env file if present
+# Variables include: UPN, TENANT_ID, STORAGE_ACCOUNT_NAME, etc.
+```
 
 ## Azure
 
@@ -28,6 +92,37 @@ $containerName = "yourcontainer"
 
 # Run the script
 .\Azure\Get-AzureBlobFiles.ps1
+```
+
+### [Get-EntraGroupMembers.ps1](Azure/Get-EntraGroupMembers.ps1)
+
+Retrieves members of an Entra ID (Azure AD) group by name or email. Displays users, groups, and service principals with categorized output.
+
+#### Get-EntraGroupMembers.ps1 Example
+
+```PowerShell
+# Get members of a group by display name
+.\Azure\Get-EntraGroupMembers.ps1 -GroupNameOrEmail "Marketing Team"
+
+# Get members of a group by email
+.\Azure\Get-EntraGroupMembers.ps1 -GroupNameOrEmail "marketing@contoso.com"
+```
+
+### [Set-AzureBlobStorageAccess.ps1](Azure/Set-AzureBlobStorageAccess.ps1)
+
+Configures network access rules for Azure Blob Storage accounts. Enables or disables public access and manages IP firewall rules.
+
+#### Set-AzureBlobStorageAccess.ps1 Example
+
+```PowerShell
+# Enable network restrictions and add current IP
+Set-AzureBlobStorageAccess -ResourceGroupName "myResourceGroup" `
+    -StorageAccountName "mystorageaccount" `
+    -Enable
+
+# Disable network restrictions
+Set-AzureBlobStorageAccess -ResourceGroupName "myResourceGroup" `
+    -StorageAccountName "mystorageaccount"
 ```
 
 ### [Set-AzureSQLServerAccess.ps1](Azure/Set-AzureSQLServerAccess.ps1)
@@ -288,11 +383,11 @@ $clientId = "your-app-registration-id"
 
 ## Power-Platform
 
-### [Add-AppUserviaCLI.ps1](Power-Platform/Add-AppUserviaCLI.ps1)
+### [Add-AppUserViaCLI.ps1](Power-Platform/Add-AppUserViaCLI.ps1)
 
 Adds users to Power Platform applications via CLI commands.
 
-#### Add-AppUserviaCLI.ps1 Example
+#### Add-AppUserViaCLI.ps1 Example
 
 ```PowerShell
 # Set your parameters
@@ -301,18 +396,19 @@ $role = "System Administrator"
 $appId = "your-app-registration-id"
 
 # Run the script
-.\Power-Platform\Add-AppUserviaCLI.ps1
+.\Power-Platform\Add-AppUserViaCLI.ps1
 ```
 
-### [ConvertFrom-TranscriptData.ps1](Power-Platform/ConvertFrom-TranscriptData.ps1)
+### [ConvertFrom-AgentTranscript.ps1](Power-Platform/ConvertFrom-AgentTranscript.ps1)
 
-Converts and processes transcript data from Power Platform conversation transcripts.
+Converts conversation transcript data from Power Platform to human-readable format, reconstructing chronological conversations between users and bots.
 
-#### ConvertFrom-TranscriptData.ps1 Example
+#### ConvertFrom-AgentTranscript.ps1 Example
 
 ```PowerShell
-# Run the script to convert transcript data
-.\Power-Platform\ConvertFrom-TranscriptData -TranscriptsData $transcriptsData -OutputPath "C:\temp\parsed-transcripts.txt"
+# Convert transcript data to readable format
+.\Power-Platform\ConvertFrom-AgentTranscript.ps1 -InputFile "C:\temp\conversationtranscripts.txt" `
+    -OutputFile "C:\temp\readable_transcripts.txt"
 ```
 
 ### [Get-AllDataPolicyConnectorInfo.ps1](Power-Platform/Get-AllDataPolicyConnectorInfo.ps1)
@@ -602,6 +698,19 @@ $endDate = "2025-06-24"
 
 # Run the script
 .\SharePoint-Online\Get-SharePointAgentInteractionAuditLogItems.ps1
+```
+
+### [Get-SharePointFileProperties.ps1](SharePoint-Online/Get-SharePointFileProperties.ps1)
+
+Gets metadata properties of a file in a SharePoint document library using PnP PowerShell.
+
+#### Get-SharePointFileProperties.ps1 Example
+
+```PowerShell
+# Get file properties
+.\SharePoint-Online\Get-SharePointFileProperties.ps1 -SiteUrl "https://contoso.sharepoint.com/sites/team" `
+    -LibraryUrl "/sites/team/Shared Documents" `
+    -FileName "Document.docx"
 ```
 
 ### [New-DemoProjectHubSites.ps1](SharePoint-Online/New-DemoProjectHubSites.ps1)
