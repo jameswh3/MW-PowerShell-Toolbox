@@ -1,6 +1,6 @@
-# MW-PowerShell-Toolbox
+# MW-Toolbox
 
-A collection of scripts that I use as part of my role as a Copilot Solution Engineer.
+A collection of scripts and files that I use as part of my role as a Copilot Solution Engineer.
 
 ## Environment Configuration
 
