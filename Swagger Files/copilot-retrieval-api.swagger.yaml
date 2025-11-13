@@ -1,0 +1,493 @@
+swagger: '2.0'
+info:
+  title: Microsoft 365 Copilot Retrieval API
+  description: >
+    The Microsoft 365 Copilot Retrieval API allows for the retrieval of relevant
+    text extracts from SharePoint, 
+
+    OneDrive, and Copilot connectors content that the calling user has access
+    to, while respecting the defined 
+
+    access controls within the tenant. Use the Retrieval API to ground your
+    generative AI solutions with 
+
+    Microsoft 365 data while optimizing for context recall.
+  contact:
+    name: Microsoft Graph
+    url: https://learn.microsoft.com/en-us/graph/overview
+  license:
+    name: Microsoft APIs Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  version: v1.0
+host: graph.microsoft.com
+basePath: /v1.0
+schemes:
+  - https
+consumes: []
+produces: []
+paths:
+  /copilot/retrieval:
+    post:
+      tags:
+        - Copilot Retrieval
+      summary: Retrieve grounding data
+      description: >
+        Searches the unified audit log for relevant text extracts from
+        SharePoint, OneDrive, 
+
+        or Copilot connectors based on a natural language query. Returns up to
+        25 results with 
+
+        relevance scores and optional metadata.
+      operationId: retrieveGroundingData
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/RetrievalRequest'
+          x-examples:
+            sharePointRetrieval:
+              summary: Retrieve from SharePoint
+              value:
+                queryString: How to setup corporate VPN?
+                dataSource: sharePoint
+                resourceMetadata:
+                  - title
+                  - author
+                maximumNumberOfResults: 10
+            copilotConnectorsRetrieval:
+              summary: Retrieve from Copilot connectors
+              value:
+                queryString: How to setup corporate VPN?
+                dataSource: externalItem
+                dataSourceConfiguration:
+                  externalItem:
+                    connections:
+                      - connectionId: ContosoITServiceNowKB
+                      - connectionId: ContosoHRServiceNowKB
+                resourceMetadata:
+                  - title
+                  - author
+                maximumNumberOfResults: 10
+            filteredRetrieval:
+              summary: Retrieve with filter expression
+              value:
+                queryString: How to setup corporate VPN?
+                dataSource: sharePoint
+                filterExpression: path:"https://contoso.sharepoint.com/sites/HR1/"
+                resourceMetadata:
+                  - title
+                  - author
+                maximumNumberOfResults: 4
+      responses:
+        '200':
+          description: Successful retrieval
+          schema:
+            $ref: '#/definitions/RetrievalResponse'
+          x-examples:
+            sharePointResponse:
+              summary: SharePoint retrieval response
+              value:
+                retrievalHits:
+                  - webUrl: https://contoso.sharepoint.com/sites/HR/VPNAccess.docx
+                    extracts:
+                      - text: >-
+                          To configure the VPN, click the Wi-Fi icon on your
+                          corporate device and select the VPN option.
+                        relevanceScore: 0.8374363553387588
+                      - text: >-
+                          You will need to sign in with 2FA to access the
+                          corporate VPN.
+                        relevanceScore: 0.746547264249868
+                    resourceType: listItem
+                    resourceMetadata:
+                      title: VPN Access
+                      author: John Doe
+                    sensitivityLabel:
+                      sensitivityLabelId: f71f1f74-bf1f-4e6b-b266-c777ea76e2s8
+                      displayName: Confidential\Any User (No Protection)
+                      toolTip: >-
+                        Data is classified as Confidential but is NOT PROTECTED
+                        to allow access by approved NDA business partners.
+                      priority: 4
+                      color: '#FF8C00'
+        '400':
+          description: Bad request - Invalid parameters
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid or missing authentication token
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '429':
+          description: Too many requests - Rate limit exceeded
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      security:
+        - oauth2:
+            - Files.Read.All
+            - Sites.Read.All
+  /$batch:
+    post:
+      tags:
+        - Copilot Retrieval
+        - Batch Operations
+      summary: Batch retrieval requests
+      description: >
+        Execute multiple retrieval requests in a single batch call. The API
+        supports up to 20 requests per batch.
+      operationId: batchRetrievalRequests
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/BatchRequest'
+      responses:
+        '200':
+          description: Batch request completed
+          schema:
+            $ref: '#/definitions/BatchResponse'
+      security:
+        - oauth2:
+            - Files.Read.All
+            - Sites.Read.All
+definitions:
+  RetrievalRequest:
+    required:
+      - queryString
+      - dataSource
+    type: object
+    properties:
+      queryString:
+        description: >
+          Natural language query string used to retrieve relevant text extracts.
+          This parameter has a limit of 
+
+          1,500 characters. Your queryString should be a single sentence, and
+          you should avoid spelling errors 
+
+          in context-rich keywords.
+        maxLength: 1500
+        type: string
+        example: How to setup corporate VPN?
+      dataSource:
+        description: >
+          Indicates whether extracts should be retrieved from SharePoint,
+          OneDrive, or Copilot connectors.
+        enum:
+          - sharePoint
+          - oneDriveBusiness
+          - externalItem
+        type: string
+        example: sharePoint
+      dataSourceConfiguration:
+        $ref: '#/definitions/DataSourceConfiguration'
+      filterExpression:
+        description: >
+          Keyword Query Language (KQL) expression with queryable SharePoint,
+          OneDrive, or Copilot connectors 
+
+          properties and attributes to scope the retrieval before the query
+          runs. You can use AND, OR, NOT, 
+
+          and inequality operators where applicable when constructing your
+          filterExpression.
+
+
+          Supported SharePoint and OneDrive properties for filtering:
+
+          - Author
+
+          - FileExtension
+
+          - Filename
+
+          - FileType
+
+          - InformationProtectionLabelId
+
+          - LastModifiedTime
+
+          - ModifiedBy
+
+          - Path
+
+          - SiteID
+
+          - Title
+        type: string
+        example: path:"https://contoso.sharepoint.com/sites/HR1/"
+      resourceMetadata:
+        description: >
+          A list of metadata fields to be returned for each item in the
+          response. Only retrievable metadata 
+
+          properties can be included in this list. By default, no metadata is
+          returned.
+        type: array
+        items:
+          type: string
+        example:
+          - title
+          - author
+      maximumNumberOfResults:
+        description: >
+          The number of results that are returned in the response. Must be
+          between 1 and 25. 
+
+          By default, returns up to 25 results.
+        default: 25
+        maximum: 25
+        minimum: 1
+        type: integer
+        example: 10
+  DataSourceConfiguration:
+    description: Contains additional configuration information for applicable data sources.
+    type: object
+    properties:
+      externalItem:
+        $ref: '#/definitions/ExternalItemConfiguration'
+  ExternalItemConfiguration:
+    description: Configuration for Copilot connectors retrieval.
+    type: object
+    properties:
+      connections:
+        description: List of specific Copilot connector connection IDs to query.
+        type: array
+        items:
+          $ref: '#/definitions/ConnectionConfiguration'
+  ConnectionConfiguration:
+    type: object
+    properties:
+      connectionId:
+        description: The ID of a specific Copilot connector connection.
+        type: string
+        example: ContosoITServiceNowKB
+  RetrievalResponse:
+    type: object
+    properties:
+      retrievalHits:
+        description: >-
+          Array of retrieval hits containing relevant text extracts and
+          metadata.
+        type: array
+        items:
+          $ref: '#/definitions/RetrievalHit'
+  RetrievalHit:
+    type: object
+    properties:
+      webUrl:
+        description: URL to the source document or item.
+        type: string
+        example: https://contoso.sharepoint.com/sites/HR/VPNAccess.docx
+      extracts:
+        description: Array of relevant text extracts from the document.
+        type: array
+        items:
+          $ref: '#/definitions/Extract'
+      resourceType:
+        description: >-
+          Type of resource (SharePoint/OneDrive item or external item from
+          Copilot connectors).
+        enum:
+          - listItem
+          - externalItem
+        type: string
+        example: listItem
+      resourceMetadata:
+        description: Metadata fields requested in the query.
+        type: object
+        example:
+          title: VPN Access
+          author: John Doe
+      sensitivityLabel:
+        $ref: '#/definitions/SensitivityLabel'
+  Extract:
+    type: object
+    properties:
+      text:
+        description: The extracted text snippet from the document.
+        type: string
+        example: >-
+          To configure the VPN, click the Wi-Fi icon on your corporate device
+          and select the VPN option.
+      relevanceScore:
+        format: float
+        description: Relevance score for this extract relative to the query (0 to 1).
+        maximum: 1
+        minimum: 0
+        type: number
+        example: 0.8374363553387588
+  SensitivityLabel:
+    description: >-
+      Information protection label applied to the document (SharePoint/OneDrive
+      only).
+    type: object
+    properties:
+      sensitivityLabelId:
+        format: uuid
+        description: Unique identifier for the sensitivity label.
+        type: string
+        example: f71f1f74-bf1f-4e6b-b266-c777ea76e2s8
+      displayName:
+        description: Display name of the sensitivity label.
+        type: string
+        example: Confidential\Any User (No Protection)
+      toolTip:
+        description: Tooltip text describing the sensitivity label.
+        type: string
+        example: >-
+          Data is classified as Confidential but is NOT PROTECTED to allow
+          access by approved NDA business partners.
+      priority:
+        description: Priority level of the sensitivity label.
+        type: integer
+        example: 4
+      color:
+        description: Color code associated with the sensitivity label.
+        type: string
+        example: '#FF8C00'
+  BatchRequest:
+    required:
+      - requests
+    type: object
+    properties:
+      requests:
+        description: Array of individual requests to be executed in the batch (maximum 20).
+        maxItems: 20
+        type: array
+        items:
+          $ref: '#/definitions/BatchRequestItem'
+  BatchRequestItem:
+    required:
+      - id
+      - method
+      - url
+    type: object
+    properties:
+      id:
+        description: Unique identifier for this request within the batch. Must be a string.
+        type: string
+        example: '1'
+      method:
+        description: HTTP method for the request.
+        enum:
+          - POST
+        type: string
+        example: POST
+      url:
+        description: Relative URL for the request (e.g., /copilot/retrieval).
+        type: string
+        example: /copilot/retrieval
+      body:
+        $ref: '#/definitions/RetrievalRequest'
+      headers:
+        description: HTTP headers for this request.
+        type: object
+        additionalProperties:
+          type: string
+        example:
+          Content-Type: application/json
+  BatchResponse:
+    type: object
+    properties:
+      responses:
+        type: array
+        items:
+          $ref: '#/definitions/BatchResponseItem'
+  BatchResponseItem:
+    type: object
+    properties:
+      id:
+        description: The ID from the corresponding request.
+        type: string
+        example: '1'
+      status:
+        description: HTTP status code for this response.
+        type: integer
+        example: 200
+      headers:
+        description: HTTP response headers.
+        type: object
+        additionalProperties:
+          type: string
+      body:
+        type: object
+        properties:
+          retrievalHits:
+            description: Array of retrieval hits containing relevant text extracts and metadata.
+            type: array
+            items:
+              $ref: '#/definitions/RetrievalHit'
+  ErrorResponse:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            description: Error code.
+            type: string
+            example: BadRequest
+          message:
+            description: Error message.
+            type: string
+            example: Invalid query string parameter
+          innerError:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              date:
+                format: date-time
+                type: string
+              request-id:
+                type: string
+              client-request-id:
+                type: string
+parameters: {}
+responses: {}
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    flow: accessCode
+    tokenUrl: https://login.windows.net/common/oauth2/authorize
+    scopes:
+      Files.Read.All: Files.Read.All
+      Sites.Read.All: Sites.Read.All
+      ExternalItem.Read.All: ExternalItem.Read.All
+    authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+security:
+  - oauth2:
+      - Files.Read.All
+      - Sites.Read.All
+      - ExternalItem.Read.All
+tags:
+  - name: Copilot Retrieval
+    description: Operations for retrieving grounding data from Microsoft 365 content
+  - name: Batch Operations
+    description: Batch request operations for multiple retrieval queries
+externalDocs:
+  description: Microsoft 365 Copilot Retrieval API Documentation
+  url: >-
+    https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/api/ai-services/retrieval/copilotroot-retrieval

@@ -70,8 +70,8 @@ $workingDirectory = $workingDirectory.TrimEnd('\')
 # Define menu items with categories
 $menuCategories = [ordered]@{
     "Compliance" = @(
-        "Download Copilot Audit Logs from M365 Tenant (14 days)",
-        "Download Full Audit Logs from M365 Tenant (14 days)"
+        "Download Copilot Audit Logs from M365 Tenant",
+        "Download Full Audit Logs from M365 Tenant"
     )
     "Compute" = @(
         "Start Azure VMs"
@@ -137,7 +137,7 @@ do {
 
     # Switch statement for menu actions
     switch ($selectedItem) {
-        "Download Copilot Audit Logs from M365 Tenant (14 days)" { 
+        "Download Copilot Audit Logs from M365 Tenant" { 
             write-host "Running $selectedItem..." -ForegroundColor Green
             . "$workingDirectory\Copilot\Get-CopilotInteractionAuditLogItems.ps1"
             if (-not ($upn)) {
@@ -150,17 +150,14 @@ do {
                     -OutputFile "$outputDirectory\copilotauditlog.csv" `
                     -Append
         }
-        "Download Full Audit Logs from M365 Tenant (14 days)"{
+        "Download Full Audit Logs from M365 Tenant"{
             write-host "Running $selectedItem..." -ForegroundColor Green
-            . "$workingDirectory\Copilot\Get-AuditLogResults.ps1"
-            if (-not ($upn)) {
-                $upn = Read-Host "Enter your UPN"
-            }
+            #todo modify this to be a function
+            . "$workingDirectory\Compliance\Get-AuditLogResults.ps1"
             Get-AuditLogResults -StartDate $startDate `
                 -EndDate $endDate `
                 -UserPrincipalName $upn `
-                -OutputFile "$outputDirectory\auditlog.csv" `
-                -Append
+                -OutputPath "$outputDirectory\fullauditlog.csv"
         }
         "Download Azure Blob Files" { 
             write-host "Running $selectedItem..." -ForegroundColor Green
@@ -211,7 +208,7 @@ do {
                 -ClientSecret $PowerPlatClientSecret `
                 -OrgUrl $PowerPlatOrgUrl `
                 -TenantDomain $PowerPlatTenantDomain `
-                -StartDate (Get-Date).AddDays(-14) `
+                -StartDate (Get-Date).AddDays(-30) `
                 -EndDate (Get-Date)
             $transcriptData | out-file "$outputDirectory\conversationtranscripts.txt"
             Write-Host "Transcript data exported to $outputDirectory\conversationtranscripts.txt" -ForegroundColor Green
